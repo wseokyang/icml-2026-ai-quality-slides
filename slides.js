@@ -18,10 +18,12 @@
   const liveRegion = document.querySelector("#live-region");
 
   let currentIndex = 0;
-  let scrollFrame = 0;
   let touchStartX = 0;
   let touchStartY = 0;
   let overviewOrigin = 0;
+  let wheelAccumulator = 0;
+  let wheelLocked = false;
+  let wheelResetTimer = 0;
 
   const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
   const pad = (value) => String(value).padStart(2, "0");
@@ -40,20 +42,24 @@
 
   function setActive(index, announce = false) {
     const nextIndex = clamp(index, 0, slides.length - 1);
-    if (nextIndex === currentIndex && slides[nextIndex].classList.contains("is-active")) {
-      return;
-    }
-
+    const changed = nextIndex !== currentIndex;
     currentIndex = nextIndex;
     slides.forEach((slide, slideIndex) => {
       const active = slideIndex === currentIndex;
       slide.classList.toggle("is-active", active);
+      slide.classList.toggle("is-before", slideIndex < currentIndex);
+      slide.classList.toggle("is-after", slideIndex > currentIndex);
+      slide.inert = !active;
       if (active) {
         slide.setAttribute("aria-current", "page");
+        slide.removeAttribute("aria-hidden");
       } else {
         slide.removeAttribute("aria-current");
+        slide.setAttribute("aria-hidden", "true");
       }
     });
+
+    if (changed) slides[currentIndex].scrollTop = 0;
 
     const humanIndex = currentIndex + 1;
     const title = slides[currentIndex].dataset.title || `슬라이드 ${humanIndex}`;
@@ -70,35 +76,13 @@
     }
   }
 
-  function goTo(index, behavior = "smooth", announce = true) {
+  function goTo(index, _behavior = "smooth", announce = true) {
     const targetIndex = clamp(index, 0, slides.length - 1);
     if (document.body.classList.contains("overview-mode")) {
       leaveOverview(targetIndex);
       return;
     }
     setActive(targetIndex, announce);
-    slides[targetIndex].scrollIntoView({ block: "start", behavior });
-  }
-
-  function nearestSlide() {
-    const deckTop = deck.getBoundingClientRect().top;
-    let closestIndex = currentIndex;
-    let closestDistance = Number.POSITIVE_INFINITY;
-
-    slides.forEach((slide, index) => {
-      const distance = Math.abs(slide.getBoundingClientRect().top - deckTop);
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestIndex = index;
-      }
-    });
-    return closestIndex;
-  }
-
-  function onDeckScroll() {
-    if (document.body.classList.contains("overview-mode")) return;
-    cancelAnimationFrame(scrollFrame);
-    scrollFrame = requestAnimationFrame(() => setActive(nearestSlide()));
   }
 
   function closePanel(panel) {
@@ -133,6 +117,10 @@
     closePanel(notesPanel);
     closePanel(sourcesPanel);
     document.body.classList.add("overview-mode");
+    slides.forEach((slide) => {
+      slide.inert = false;
+      slide.removeAttribute("aria-hidden");
+    });
     overviewButton.setAttribute("aria-pressed", "true");
     overviewButton.setAttribute("aria-label", "전체 보기 닫기");
     requestAnimationFrame(() => {
@@ -141,12 +129,14 @@
   }
 
   function leaveOverview(targetIndex = overviewOrigin) {
+    document.body.classList.add("deck-restoring");
     document.body.classList.remove("overview-mode");
     overviewButton.setAttribute("aria-pressed", "false");
     overviewButton.setAttribute("aria-label", "전체 슬라이드 보기");
     window.scrollTo({ top: 0, behavior: "instant" });
+    setActive(targetIndex, true);
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => goTo(targetIndex, "instant"));
+      requestAnimationFrame(() => document.body.classList.remove("deck-restoring"));
     });
   }
 
@@ -233,6 +223,33 @@
     if (slide) leaveOverview(slides.indexOf(slide));
   }
 
+  function onWheel(event) {
+    if (document.body.classList.contains("overview-mode")) return;
+    if (notesPanel.classList.contains("is-open") || sourcesPanel.classList.contains("is-open")) return;
+
+    const activeSlide = slides[currentIndex];
+    const direction = Math.sign(event.deltaY);
+    if (!direction) return;
+
+    const atTop = activeSlide.scrollTop <= 1;
+    const atBottom = activeSlide.scrollTop + activeSlide.clientHeight >= activeSlide.scrollHeight - 1;
+    const canScrollInside = (direction > 0 && !atBottom) || (direction < 0 && !atTop);
+    if (canScrollInside) return;
+
+    event.preventDefault();
+    if (wheelLocked) return;
+
+    wheelAccumulator += event.deltaY;
+    clearTimeout(wheelResetTimer);
+    wheelResetTimer = window.setTimeout(() => { wheelAccumulator = 0; }, 180);
+    if (Math.abs(wheelAccumulator) < 45) return;
+
+    goTo(currentIndex + (wheelAccumulator > 0 ? 1 : -1));
+    wheelAccumulator = 0;
+    wheelLocked = true;
+    window.setTimeout(() => { wheelLocked = false; }, 560);
+  }
+
   previousButton.addEventListener("click", () => goTo(currentIndex - 1));
   nextButton.addEventListener("click", () => goTo(currentIndex + 1));
   overviewButton.addEventListener("click", toggleOverview);
@@ -242,8 +259,8 @@
   document.querySelectorAll(".panel-close").forEach((button) => {
     button.addEventListener("click", () => closePanel(button.closest(".utility-panel")));
   });
-  deck.addEventListener("scroll", onDeckScroll, { passive: true });
   deck.addEventListener("click", onOverviewClick);
+  deck.addEventListener("wheel", onWheel, { passive: false });
   document.addEventListener("keydown", onKeydown);
 
   deck.addEventListener("touchstart", (event) => {
@@ -263,6 +280,13 @@
     fullscreenButton.setAttribute("aria-pressed", String(Boolean(document.fullscreenElement)));
   });
   window.addEventListener("hashchange", () => goTo(indexFromHash(), "instant", false));
+  window.addEventListener("beforeprint", () => {
+    slides.forEach((slide) => {
+      slide.inert = false;
+      slide.removeAttribute("aria-hidden");
+    });
+  });
+  window.addEventListener("afterprint", () => setActive(currentIndex));
 
   notesButton.setAttribute("aria-expanded", "false");
   notesButton.setAttribute("aria-controls", "notes-panel");
@@ -273,7 +297,6 @@
 
   const initialIndex = indexFromHash();
   setActive(initialIndex);
-  requestAnimationFrame(() => goTo(initialIndex, "instant", false));
 
   window.icmlDeck = {
     goTo,
