@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="TSP 품질 엔지니어를 위한 ICML 2026 후기 — benchmark와 현실 데이터의 차이를 중심으로">
+  <title>ICML 2026 — AI의 최고점과 현실의 품질</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230071e3'/%3E%3Ctext x='50' y='66' text-anchor='middle' font-family='Arial' font-size='48' font-weight='700' fill='white'%3EAI%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#deck">슬라이드 본문으로 이동</a>
+
+  <header class="deck-chrome" aria-label="발표 도구 모음">
+    <div class="deck-brand">
+      <span class="brand-dot" aria-hidden="true"></span>
+      <span>ICML 2026</span>
+      <span class="brand-context">AI × Quality</span>
+    </div>
+    <div class="chrome-actions">
+      <button class="chrome-button" id="overview-button" type="button" title="전체 보기 (O)" aria-label="전체 슬라이드 보기">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="2"></rect><rect x="14" y="3" width="7" height="7" rx="2"></rect><rect x="3" y="14" width="7" height="7" rx="2"></rect><rect x="14" y="14" width="7" height="7" rx="2"></rect></svg>
+      </button>
+      <button class="chrome-button" id="notes-button" type="button" title="발표자 노트 (N)" aria-label="발표자 노트 열기">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 3V6a2 2 0 0 1 2-2Z"></path><path d="M8 9h8M8 13h5"></path></svg>
+      </button>
+      <button class="chrome-button" id="fullscreen-button" type="button" title="전체 화면 (F)" aria-label="전체 화면 전환">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="deck" class="deck" aria-label="ICML 2026 발표 슬라이드">
+    <section class="slide slide-hero theme-black" data-title="AI가 사람보다 잘하나요?" aria-labelledby="slide-1-title">
+      <div class="ambient ambient-blue" aria-hidden="true"></div>
+      <div class="slide-inner hero-grid">
+        <div class="hero-copy reveal-group">
+          <p class="eyebrow">ICML 2026 · SEOUL</p>
+          <h1 id="slide-1-title">AI가 사람보다<br><span class="text-blue">잘하나요?</span></h1>
+          <p class="hero-subtitle">답하기 전에,<br class="mobile-only"> 어떤 시험을 봤는지부터 봐야 합니다.</p>
+          <div class="hero-meta">
+            <span>TSP 품질 엔지니어를 위한 ICML 후기</span>
+            <span>2026.07</span>
+          </div>
+        </div>
+        <div class="hero-orbit" aria-label="SOTA, 사람, 현실의 관계를 표현한 개념 그래픽">
+          <div class="orbit-ring orbit-ring-one"></div>
+          <div class="orbit-ring orbit-ring-two"></div>
+          <div class="hero-core"><span>AI</span></div>
+          <span class="orbit-label orbit-label-sota">SOTA</span>
+          <span class="orbit-label orbit-label-human">HUMAN</span>
+          <span class="orbit-label orbit-label-reality">REALITY</span>
+        </div>
+        <div class="scroll-cue" aria-hidden="true"><span></span>Scroll or press →</div>
+      </div>
+      <aside class="speaker-notes">첫 질문은 일부러 단순하게 던집니다. 오늘의 핵심은 AI가 몇 점인지보다, 그 점수가 어떤 시험 환경에서 나왔는지를 함께 보는 것입니다.</aside>
+    </section>
+
+    <section class="slide theme-white" data-title="오늘의 한 문장" aria-labelledby="slide-2-title">
+      <div class="slide-inner centered-layout">
+        <p class="eyebrow dark">TODAY'S THESIS</p>
+        <h2 id="slide-2-title" class="statement-title">SOTA는 깨끗한 시험지에서 받은 <span class="text-blue">최고점</span>입니다.</h2>
+        <p class="statement-subtitle">현실의 품질 문제는 시험지 밖에서 시작됩니다.</p>
+        <div class="equation-row" aria-label="SOTA와 현실 적용 가능성이 같지 않음을 나타내는 문장">
+          <span>SOTA</span><strong>≠</strong><span>Human-level</span><strong>≠</strong><span>Deployment-ready</span>
+        </div>
+        <div class="reality-check neutral"><span>FRAME</span>Benchmark는 비교의 출발점이지, 양산 승인서가 아닙니다.</div>
+      </div>
+      <aside class="speaker-notes">‘SOTA’는 같은 데이터와 같은 채점 규칙 아래 기존 논문보다 높다는 뜻입니다. 사람 수준, 고객 환경, 양산 readiness는 별도의 시험이 필요합니다.</aside>
+    </section>
+
+    <section class="slide theme-pearl" data-title="Benchmark와 현실" aria-labelledby="slide-3-title">
+      <div class="slide-inner">
+        <div class="section-heading-row">
+          <div>
+            <p class="eyebrow dark">01 · THE GAP</p>
+            <h2 id="slide-3-title">시험지는 깨끗합니다.<br><span class="muted-heading">현실은 그렇지 않습니다.</span></h2>
+          </div>
+          <p class="side-thesis">Benchmark는 닫힌 세계.<br>현장은 계속 변하는 세계.</p>
+        </div>
+        <div class="world-comparison">
+          <article class="world-card benchmark-world">
+            <div class="world-card-head"><span class="status-dot green"></span><span>BENCHMARK</span><span class="world-badge">Clean room</span></div>
+            <div class="clean-sample-grid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <ul class="plain-list"><li>고정된 카메라와 조명</li><li>검수된 정답 라벨</li><li>알려진 불량 유형</li><li>한 번 정한 평가 규칙</li></ul>
+          </article>
+          <div class="versus" aria-hidden="true">VS</div>
+          <article class="world-card reality-world">
+            <div class="world-card-head"><span class="status-dot orange"></span><span>REALITY</span><span class="world-badge warning">Factory floor</span></div>
+            <div class="dirty-sample-field" aria-hidden="true"><span class="noise n1"></span><span class="noise n2"></span><span class="noise n3"></span><span class="noise n4"></span><span class="noise n5"></span><span class="noise n6"></span><span class="noise n7"></span><span class="noise n8"></span><span class="noise n9"></span><span class="noise n10"></span><span class="glare"></span></div>
+            <ul class="plain-list"><li>반사·blur·오염·가림</li><li>설비·lot·revision 변화</li><li>미지·복합·희귀 불량</li><li>사람끼리도 다른 판정</li></ul>
+          </article>
+        </div>
+        <div class="reality-check"><span>REALITY CHECK</span>현실 데이터는 더 지저분할 뿐 아니라, 시간이 지나며 계속 달라집니다.</div>
+      </div>
+      <aside class="speaker-notes">이 장은 발표 전체의 기준점입니다. 벤치마크가 나쁘다는 뜻이 아니라, 통제된 비교 시험과 실제 양산 환경이 서로 다른 질문에 답한다는 뜻입니다.</aside>
+    </section>
+
+    <section class="slide theme-black" data-title="Reality tax" aria-labelledby="slide-4-title">
+      <div class="ambient ambient-purple" aria-hidden="true"></div>
+      <div class="slide-inner reality-tax-layout">
+        <div class="tax-copy">
+          <p class="eyebrow">REALITY TAX</p>
+          <h2 id="slide-4-title">현장에 나오는 순간,<br>모델은 여섯 가지 <span class="text-blue">세금</span>을 냅니다.</h2>
+          <p class="lead-on-dark">평균 점수 하나로는 이 비용을 볼 수 없습니다.</p>
+        </div>
+        <div class="tax-orbit" aria-label="현실 데이터의 여섯 가지 어려움">
+          <div class="tax-center">MODEL<br><strong>IN PROD</strong></div><div class="tax-ring"></div>
+          <span class="tax-chip t1">Domain shift</span><span class="tax-chip t2">Label noise</span><span class="tax-chip t3">Class imbalance</span><span class="tax-chip t4">Sensor drift</span><span class="tax-chip t5">Missing data</span><span class="tax-chip t6">Unknown defects</span>
+        </div>
+        <div class="reality-check on-dark"><span>POSITION</span>ICML 2026에도 “benchmark가 deployment readiness를 측정하지 못한다”는 입장 논문이 채택됐습니다. <a href="https://icml.cc/virtual/2026/poster/67107" target="_blank" rel="noopener noreferrer">ICML position paper ↗</a></div>
+      </div>
+      <aside class="speaker-notes">현실 격차를 여섯 단어로 기억하게 합니다. 입장 논문은 임상 AI 사례지만, retrospective benchmark와 실제 운영 readiness가 다르다는 논점은 제조 품질에도 그대로 대응됩니다.</aside>
+    </section>
+
+    <section class="slide theme-white" data-title="ICML 2026 관심 분야" aria-labelledby="slide-5-title">
+      <div class="slide-inner">
+        <p class="eyebrow dark">WHAT RESEARCHERS CARE ABOUT</p>
+        <h2 id="slide-5-title">그래서 연구의 관심도<br><span class="text-blue">정확도 밖</span>으로 넓어지고 있습니다.</h2>
+        <div class="trend-grid">
+          <article class="trend-card"><span class="trend-index">01</span><div class="trend-icon icon-one" aria-hidden="true"></div><h3>Few / Zero-shot</h3><p>불량 표본이 거의 없어도 찾기</p></article>
+          <article class="trend-card"><span class="trend-index">02</span><div class="trend-icon icon-layers" aria-hidden="true"></div><h3>Multimodal</h3><p>RGB · 3D · 도면 · 센서 함께 보기</p></article>
+          <article class="trend-card"><span class="trend-index">03</span><div class="trend-icon icon-loop" aria-hidden="true"></div><h3>Tool-grounded Agent</h3><p>시뮬레이터 결과로 스스로 수정하기</p></article>
+          <article class="trend-card"><span class="trend-index">04</span><div class="trend-icon icon-wave" aria-hidden="true"></div><h3>Physical Surrogate</h3><p>비싼 실험 전에 후보 선별하기</p></article>
+          <article class="trend-card"><span class="trend-index">05</span><div class="trend-icon icon-shield" aria-hidden="true"></div><h3>Reliability</h3><p>언제 믿고 언제 거부할지 측정하기</p></article>
+        </div>
+        <p class="method-note">품질 조직에 설명하기 좋은 ICML 2026 응용 논문을 중심으로 선별한 흐름이며, 학회 전체 분야의 정량 분류는 아닙니다.</p>
+      </div>
+      <aside class="speaker-notes">이후 사례들을 다섯 키워드에 매핑합니다. ‘거대 모델 경쟁’보다 데이터 부족, 물리 정보, 도구 피드백, 신뢰성이 품질팀과 맞닿아 있다는 점을 강조합니다.</aside>
+    </section>
+
+    <section class="slide theme-black" data-title="RAD: 정상 한 장" aria-labelledby="slide-6-title">
+      <div class="slide-inner case-layout">
+        <div class="case-copy">
+          <p class="eyebrow">CASE 01 · INDUSTRIAL INSPECTION</p>
+          <h2 id="slide-6-title">정상 사진<br><span class="giant-number text-blue">1장</span>으로 시작합니다.</h2>
+          <p class="case-lead">RAD는 새 검사 task에 별도 학습 없이, 정상 golden sample과 범용 시각 지식을 비교합니다.</p>
+          <div class="metric-pair"><div><strong>96.7%</strong><span>Pixel AUROC</span></div><div><strong>91.9%</strong><span>AUPRO</span></div></div>
+        </div>
+        <div class="inspection-flow" aria-label="정상 샘플을 저장하고 검사 이미지의 이상 영역을 찾는 과정">
+          <div class="inspection-card normal-card"><span class="visual-label">NORMAL × 1</span><div class="part-visual clean-part"><i></i><i></i><i></i><i></i></div></div>
+          <div class="flow-arrow" aria-hidden="true">→</div><div class="memory-pill">MEMORY</div><div class="flow-arrow" aria-hidden="true">→</div>
+          <div class="inspection-card anomaly-card"><span class="visual-label">ANOMALY MAP</span><div class="part-visual heat-part"><i></i><i></i><i></i><i></i><span class="heat-spot"></span></div></div>
+        </div>
+        <div class="reality-check on-dark"><span>REALITY CHECK</span>표준화된 MVTec-AD의 1-shot 결과입니다. 신규 설비·조명·제품 shift는 별도 시험이 필요합니다. <a href="https://arxiv.org/abs/2601.22763" target="_blank" rel="noopener noreferrer">RAD ↗</a></div>
+      </div>
+      <aside class="speaker-notes">‘학습 없음’은 AI가 아무것도 배운 적 없다는 뜻이 아닙니다. 범용 사전학습 모델은 사용하지만, 새 검사 task용 parameter training을 하지 않는다는 의미입니다.</aside>
+    </section>
+
+    <section class="slide theme-pearl" data-title="CoGeoAD: RGB + 3D" aria-labelledby="slide-7-title">
+      <div class="slide-inner case-layout light-case">
+        <div class="case-copy">
+          <p class="eyebrow dark">CASE 02 · MULTIMODAL INSPECTION</p>
+          <h2 id="slide-7-title">색만 보지 않고,<br><span class="text-blue">형상</span>도 봅니다.</h2>
+          <p class="case-lead dark-lead">얼룩은 RGB에, 균열과 찌그러짐은 3D geometry에 더 잘 보입니다.</p>
+          <div class="delta-metrics"><div><span>Image AUROC</span><strong>70.3 <i>→</i> 82.6</strong></div><div><span>AUPRO</span><strong>73.4 <i>→</i> 87.2</strong></div></div>
+        </div>
+        <div class="fusion-visual" aria-label="RGB와 3D 정보를 결합하는 개념 그래픽">
+          <div class="modality-card rgb-card"><span>RGB</span><div class="rgb-object"><i></i></div><small>texture · stain</small></div><div class="plus-symbol" aria-hidden="true">+</div>
+          <div class="modality-card depth-card"><span>3D</span><div class="depth-object"><i></i><i></i><i></i><i></i><i></i></div><small>shape · crack</small></div><div class="equals-symbol" aria-hidden="true">=</div>
+          <div class="fusion-result"><span>FUSED</span><div class="fused-orb"></div><small>color × geometry</small></div>
+        </div>
+        <div class="reality-check"><span>REALITY CHECK</span>Zero-shot은 “데이터 0개”가 아니라 목표 dataset으로 추가 적응하지 않았다는 뜻입니다. <a href="https://arxiv.org/abs/2606.25273" target="_blank" rel="noopener noreferrer">CoGeoAD ↗</a></div>
+      </div>
+      <aside class="speaker-notes">CoGeoAD는 한 dataset에서 학습하고 다른 dataset에서 시험하는 cross-dataset zero-shot입니다. 현장에서는 카메라 calibration, 3D 정합, takt time까지 함께 봐야 합니다.</aside>
+    </section>
+
+    <section class="slide theme-black" data-title="오염된 정상 데이터" aria-labelledby="slide-8-title">
+      <div class="ambient ambient-red" aria-hidden="true"></div>
+      <div class="slide-inner contamination-layout">
+        <div class="contamination-copy">
+          <p class="eyebrow">CASE 03 · DIRTY TRAINING DATA</p>
+          <h2 id="slide-8-title">“정상 데이터”가<br>정말 <span class="text-coral">정상</span>인가요?</h2>
+          <p class="lead-on-dark">현실에서는 미검 불량이 정상 memory 안으로 들어옵니다.</p>
+        </div>
+        <div class="contamination-chart" aria-label="오염 비율에 따른 image AUROC 변화">
+          <div class="chart-head"><span>MVTecAD · Image AUROC</span><span>40% controlled contamination</span></div>
+          <div class="bar-row"><span>Clean baseline</span><div class="bar-track"><i style="--bar:99.64%"></i></div><strong>99.64</strong></div>
+          <div class="bar-row danger"><span>Contaminated</span><div class="bar-track"><i style="--bar:87.38%"></i></div><strong>87.38</strong></div>
+          <div class="bar-row recovered"><span>+ MeDS</span><div class="bar-track"><i style="--bar:99.16%"></i></div><strong>99.16</strong></div>
+          <div class="contamination-samples" aria-hidden="true"><span></span><span></span><span class="bad"></span><span></span><span class="bad"></span><span></span><span></span><span class="bad"></span><span></span><span class="bad"></span></div>
+        </div>
+        <div class="reality-check on-dark"><span>REALITY CHECK</span>통제된 인공 오염 stress test이며 실제 fab 성능은 아닙니다. 하지만 “golden data 자체를 검증해야 한다”는 질문은 현실적입니다. <a href="https://arxiv.org/abs/2605.26676" target="_blank" rel="noopener noreferrer">MeDS ↗</a></div>
+      </div>
+      <aside class="speaker-notes">이 결과는 anomaly test sample을 정해진 비율로 training pool에 주입한 실험입니다. 숫자를 현장 성능으로 해석하지 말고, 정상 데이터 contamination에 대한 감도 시험의 필요성을 보여주는 사례로 사용합니다.</aside>
+    </section>
+
+    <section class="slide theme-white" data-title="희귀질환 MRI" aria-labelledby="slide-9-title">
+      <div class="slide-inner case-layout light-case">
+        <div class="case-copy">
+          <p class="eyebrow dark">CASE 04 · RARE ABNORMALITY</p>
+          <h2 id="slide-9-title">희귀할수록,<br>한 번의 판단을 <span class="text-blue">믿지 않습니다.</span></h2>
+          <p class="case-lead dark-lead">MRI를 조금씩 변형해 반복 관찰하고, 계속 같은 곳을 가리키는지 확인합니다.</p>
+          <div class="rare-metrics"><strong>281</strong><span>희귀 병리 유형</span><i></i><strong>+105%</strong><span>mAP@75 상대 향상</span></div>
+        </div>
+        <div class="consensus-visual" aria-label="여러 변형 영상의 예측을 합의하는 과정">
+          <div class="scan-stack"><div class="brain-scan s1"><i></i><span></span></div><div class="brain-scan s2"><i></i><span></span></div><div class="brain-scan s3"><i></i><span></span></div></div>
+          <div class="consensus-arrow">CONSENSUS <span>→</span></div><div class="brain-scan final-scan"><i></i><span></span><b>0.87</b></div>
+        </div>
+        <div class="reality-check"><span>REALITY CHECK</span>7B 모델의 절대값은 0.036→0.075입니다. 병명 진단이 아니라 이상 위치 박스 평가입니다. <a href="https://arxiv.org/abs/2604.24972" target="_blank" rel="noopener noreferrer">DDL ↗</a></div>
+      </div>
+      <aside class="speaker-notes">상대 개선 105%를 먼저 보여준 뒤 절대값을 공개하면 숫자 읽기의 중요성을 직관적으로 전달할 수 있습니다. 희귀질환을 희귀 불량과 연결하되, 의료 결과를 제조에 직접 전이한 연구는 아니라고 말합니다.</aside>
+    </section>
+
+    <section class="slide theme-black" data-title="전문 소형 모델" aria-labelledby="slide-10-title">
+      <div class="slide-inner blueprint-layout">
+        <div class="blueprint-copy">
+          <p class="eyebrow">CASE 05 · DOMAIN SPECIALIST</p>
+          <h2 id="slide-10-title">큰 범용 AI가<br>항상 더 잘하는 것은 <span class="text-blue">아닙니다.</span></h2>
+          <p class="lead-on-dark">도면 규칙을 배운 4B 전문 모델이 기계도면 benchmark에서 더 높았습니다.</p>
+          <div class="drawing-stats"><span><strong>3,281</strong> drawings</span><span><strong>20,778</strong> QA</span><span><strong>10</strong> tasks</span></div>
+        </div>
+        <div class="blueprint-panel">
+          <svg class="technical-drawing" viewBox="0 0 520 330" role="img" aria-label="기계 도면을 단순화한 벡터 그래픽">
+            <g fill="none" stroke="currentColor" stroke-width="2"><path d="M90 90h240l80 70v90H90Z"></path><circle cx="160" cy="170" r="42"></circle><circle cx="350" cy="190" r="28"></circle><path d="M202 170h120M160 128V74M160 212v54M62 90h20M62 250h20M70 100v140M90 276h320M90 266v20M410 266v20"></path><path stroke-dasharray="7 7" d="M160 84v172M112 170h96M350 150v80M310 190h80"></path><path d="m70 100-6 12h12Zm0 140-6-12h12ZM100 276l12-6v12Zm300 0-12-6v12Z"></path></g>
+            <g fill="currentColor" font-size="14"><text x="42" y="176">160</text><text x="235" y="304">320 ±0.1</text><text x="135" y="62">Ø84</text></g>
+          </svg>
+          <div class="score-bars"><div class="score-row winner"><span>MechVL · 4B</span><i style="--score:84.85%"></i><strong>84.85</strong></div><div class="score-row"><span>GPT-5</span><i style="--score:75.44%"></i><strong>75.44</strong></div></div>
+        </div>
+        <div class="reality-check on-dark"><span>REALITY CHECK</span>인간 전문가 upper bound가 없습니다. 84.85를 human-level이라고 말할 수 없습니다. <a href="https://arxiv.org/abs/2605.30794" target="_blank" rel="noopener noreferrer">MechVQA ↗</a></div>
+      </div>
+      <aside class="speaker-notes">전문 데이터와 문제 정의가 모델 크기보다 중요할 수 있다는 사례입니다. 평가 정답 자체도 전문가 검수가 필요했고, 논문은 인간 upper bound와 평가자 간 일치도를 향후 과제로 명시합니다.</aside>
+    </section>
+
+    <section class="slide theme-pearl" data-title="IC footprint 초안" aria-labelledby="slide-11-title">
+      <div class="slide-inner footprint-layout">
+        <div class="footprint-copy">
+          <p class="eyebrow dark">CASE 06 · HUMAN × AI</p>
+          <h2 id="slide-11-title"><span class="text-blue">15초</span>짜리 초안.<br>아직은 사람 아래.</h2>
+          <p class="case-lead dark-lead">LMM4-IC4K는 IC footprint 이미지에서 pin 수·좌표·크기를 구조화합니다.</p>
+          <div class="human-ai-compare"><div><span>AI model</span><strong>71.6%</strong><small>layout IoU · 0.26분</small></div><div><span>Human + EDA</span><strong>80–95%</strong><small>7–15분</small></div></div>
+        </div>
+        <div class="chip-stage" aria-label="IC footprint geometry를 표현한 그래픽">
+          <div class="dimension-line horizontal"><span>12.4 mm</span></div><div class="dimension-line vertical"><span>8.2 mm</span></div>
+          <div class="chip-body"><span>LMM</span><small>FOOTPRINT</small></div><div class="pins top"></div><div class="pins right"></div><div class="pins bottom"></div><div class="pins left"></div>
+          <div class="coordinate-tag c1">P08 · (x,y)</div><div class="coordinate-tag c2">P21 · w×h</div>
+        </div>
+        <div class="reality-check"><span>REALITY CHECK</span>빠르지만 사람보다 정확하지 않습니다. 자동 sign-off가 아니라 first-pass assistant에 가깝습니다. <a href="https://icml.cc/virtual/2026/poster/65113" target="_blank" rel="noopener noreferrer">ICML poster ↗</a></div>
+      </div>
+      <aside class="speaker-notes">공식 ICML 페이지의 현재 제목은 LMM4-IC4K입니다. 저자 공개 PDF에는 이전 명칭 LLM4-IC8K가 남아 있습니다. 이 사례의 핵심은 속도와 정확도의 trade-off이지 사람 대체가 아닙니다.</aside>
+    </section>
+
+    <section class="slide theme-black" data-title="검증 도구를 쓰는 AI" aria-labelledby="slide-12-title">
+      <div class="slide-inner agent-layout">
+        <div class="agent-copy">
+          <p class="eyebrow">CASE 07 · TOOL-GROUNDED AGENT</p>
+          <h2 id="slide-12-title">AI가 검증 도구를<br><span class="text-blue">사용하기 시작했습니다.</span></h2>
+          <p class="lead-on-dark">Testbench를 만들고, simulator coverage를 본 뒤 부족한 부분을 다시 수정합니다.</p>
+          <div class="agent-metrics"><div><strong>4B</strong><span>specialist model</span></div><div><strong>69.2%</strong><span>coverage pass</span></div><div><strong>90.4%</strong><span>average coverage</span></div></div>
+        </div>
+        <div class="agent-loop" aria-label="AI와 시뮬레이터의 반복 검증 흐름">
+          <div class="loop-node code-node"><span>01</span><strong>GENERATE</strong><small>testbench.sv</small><pre>repeat (32) begin&#10;  drive_random();&#10;end</pre></div>
+          <div class="loop-arrow a1">→</div>
+          <div class="loop-node sim-node"><span>02</span><strong>SIMULATE</strong><small>compile · run · log</small><div class="pulse-lines"><i></i><i></i><i></i><i></i></div></div>
+          <div class="loop-arrow a2">→</div>
+          <div class="loop-node coverage-node"><span>03</span><strong>COVERAGE</strong><small>branch · signal</small><div class="coverage-ring"><b>90.4</b></div></div>
+          <svg class="return-arrow" viewBox="0 0 580 160" aria-hidden="true"><path d="M500 42C500 130 80 130 80 44" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 8"></path><path d="m72 50 8-14 8 14" fill="none" stroke="currentColor" stroke-width="2"></path></svg>
+        </div>
+        <div class="reality-check on-dark"><span>REALITY CHECK</span>Coverage가 높아도 실제 bug 발견·assertion 품질이 보장되지는 않습니다. <a href="https://arxiv.org/abs/2602.16953" target="_blank" rel="noopener noreferrer">LLM4Cov ↗</a></div>
+      </div>
+      <aside class="speaker-notes">이 연구는 coverage maximizing에만 초점을 둡니다. 품질 관점에서는 coverage와 defect detection effectiveness를 분리해 설명하는 것이 중요합니다.</aside>
+    </section>
+
+    <section class="slide theme-white" data-title="FusionCell surrogate" aria-labelledby="slide-13-title">
+      <div class="slide-inner surrogate-layout">
+        <div class="surrogate-copy">
+          <p class="eyebrow dark">CASE 08 · PHYSICAL SURROGATE</p>
+          <h2 id="slide-13-title">비싼 시뮬레이션을<br>없애기보다 <span class="text-blue">줄입니다.</span></h2>
+          <p class="case-lead dark-lead">Layout geometry와 netlist topology를 함께 보고 delay·transition·power 후보를 선별합니다.</p>
+        </div>
+        <div class="surrogate-flow" aria-label="Layout과 netlist로 성능을 예측하는 흐름">
+          <div class="input-stack"><div class="layout-map"><span>LAYOUT</span><i></i><i></i><i></i><i></i><i></i></div><div class="netlist-graph"><span>NETLIST</span><i class="node n1"></i><i class="node n2"></i><i class="node n3"></i><i class="node n4"></i><b class="edge e1"></b><b class="edge e2"></b><b class="edge e3"></b></div></div>
+          <div class="fusion-box">TOPOLOGY-GUIDED<br><strong>FUSION</strong></div>
+          <div class="prediction-stack"><div><strong>0.92%</strong><span>average MAPE</span></div><div><strong>67 sec</strong><span>19.5k cells</span></div><div class="sim-time"><strong>5 days+</strong><span>golden data generation</span></div></div>
+        </div>
+        <div class="reality-check"><span>REALITY CHECK</span>공개 7nm PDK와 알려진 셀 타입 결과입니다. 첨단 proprietary node의 최종 sign-off를 대체하지 않습니다. <a href="https://arxiv.org/abs/2605.20287" target="_blank" rel="noopener noreferrer">FusionCell ↗</a></div>
+      </div>
+      <aside class="speaker-notes">AI surrogate의 좋은 사용 방식은 predicted Pareto frontier를 빠르게 만들고 최종 후보만 정밀 시뮬레이션하는 것입니다. 67초와 5일은 논문이 보고한 전체 dataset inference와 label generation 시간입니다.</aside>
+    </section>
+
+    <section class="slide theme-black" data-title="AI의 자기 신뢰도" aria-labelledby="slide-14-title">
+      <div class="ambient ambient-blue-right" aria-hidden="true"></div>
+      <div class="slide-inner calibration-layout">
+        <div class="calibration-copy">
+          <p class="eyebrow">CASE 09 · CALIBRATION</p>
+          <h2 id="slide-14-title">평균은 사람을 넘었지만,<br><span class="text-blue">모르는 걸 몰랐습니다.</span></h2>
+          <p class="lead-on-dark">405개의 실제 자연과학 실험 결과를 예측하고, 자신의 답을 믿을 수 있는지도 물었습니다.</p>
+          <div class="calibration-stats"><div><strong>14–26%</strong><span>AI accuracy</span></div><div><strong>≈20%</strong><span>human average</span></div></div>
+        </div>
+        <div class="calibration-chart" aria-label="예측 가능성 판단에 따른 사람과 AI 정확도 변화">
+          <div class="axis-label y">정확도</div><div class="axis-label x">“실험 없이 예측 가능하다”는 판단 →</div><div class="grid-line g1"></div><div class="grid-line g2"></div><div class="grid-line g3"></div><div class="grid-line g4"></div>
+          <svg viewBox="0 0 560 330" role="img"><defs><linearGradient id="humanLine" x1="0" x2="1"><stop offset="0" stop-color="#8e8e93"></stop><stop offset="1" stop-color="#f5f5f7"></stop></linearGradient></defs><path class="human-line" d="M42 286 C150 270, 260 232, 350 154 S475 62, 526 42" fill="none" stroke="url(#humanLine)" stroke-width="5" stroke-linecap="round"></path><path class="ai-line" d="M42 228 C180 221, 340 226, 526 220" fill="none" stroke="#2997ff" stroke-width="5" stroke-linecap="round"></path><circle cx="42" cy="286" r="7" fill="#f5f5f7"></circle><circle cx="526" cy="42" r="7" fill="#f5f5f7"></circle><circle cx="42" cy="228" r="7" fill="#2997ff"></circle><circle cx="526" cy="220" r="7" fill="#2997ff"></circle></svg>
+          <span class="line-label human">HUMAN · 5→80%</span><span class="line-label ai">AI · ≈20%</span>
+        </div>
+        <div class="reality-check on-dark"><span>REALITY CHECK</span>특정 자연과학 실험 benchmark의 결과이지 일반적인 인간 지능 비교가 아닙니다. <a href="https://arxiv.org/abs/2604.10718" target="_blank" rel="noopener noreferrer">SciPredict ↗</a></div>
+      </div>
+      <aside class="speaker-notes">일부 AI의 평균 정확도가 인간 평균보다 높았지만, 자신감이나 예측 가능성 판단에 따라 정확도가 올라가지 않았습니다. 품질 의사결정에서는 평균보다 selective prediction과 abstention이 중요합니다.</aside>
+    </section>
+
+    <section class="slide theme-pearl" data-title="숫자의 함정" aria-labelledby="slide-15-title">
+      <div class="slide-inner metric-trap-layout">
+        <div class="metric-trap-copy">
+          <p class="eyebrow dark">THE METRIC TRAP</p>
+          <h2 id="slide-15-title"><span class="text-blue">98.9%</span>가<br>현장 정확도 98.9%는 아닙니다.</h2>
+          <p class="case-lead dark-lead">희귀 불량에서는 작은 false positive tail도 수많은 오검으로 바뀝니다.</p>
+        </div>
+        <div class="metric-contrast">
+          <article class="metric-card high"><span>Pixel AUROC</span><strong>98.9</strong><small>ranking across thresholds</small></article><div class="not-equal" aria-hidden="true">≠</div>
+          <article class="metric-card low"><span>Pixel max-F1</span><strong>46.4</strong><small>best operating threshold</small></article>
+          <div class="imbalance-card"><strong>0.61%</strong><span>전체 픽셀 중 불량 픽셀</span><div class="pixel-strip" aria-hidden="true"><i></i><i></i><i></i></div></div>
+        </div>
+        <div class="metric-lesson"><strong>평균 하나를 버리고 slice로 봅니다.</strong><span>제품 × 설비 × lot × revision × 시간 × 불량 유형</span></div>
+        <div class="reality-check"><span>REALITY CHECK</span>ICML 연구도 기존 anomaly metric들이 중복 검출과 false positive의 공간 분포를 놓친다고 지적합니다. <a href="https://arxiv.org/abs/2601.22763" target="_blank" rel="noopener noreferrer">RAD ↗</a> <a href="https://icml.cc/virtual/2026/poster/65518" target="_blank" rel="noopener noreferrer">Metric study ↗</a></div>
+      </div>
+      <aside class="speaker-notes">AUROC는 threshold-free 순위 지표라 불량 픽셀 비율이 극단적으로 낮을 때 실제 precision을 가릴 수 있습니다. 3D-ADAM 사례에서 95% TPR의 pixel FPR은 4.6%였습니다.</aside>
+    </section>
+
+    <section class="slide theme-white" data-title="AI 품질 게이트" aria-labelledby="slide-16-title">
+      <div class="slide-inner quality-gates-layout">
+        <div class="gates-heading">
+          <p class="eyebrow dark">FROM MODEL SCORE TO PRODUCT QUALITY</p>
+          <h2 id="slide-16-title">그래서 품질 엔지니어의 역할이<br><span class="text-blue">더 커집니다.</span></h2>
+          <p class="case-lead dark-lead">모델을 만드는 것과, 모델을 믿어도 되는 조건을 만드는 것은 다른 일입니다.</p>
+        </div>
+        <div class="gates-flow" aria-label="AI 품질을 위한 다섯 단계 게이트">
+          <article><span>01</span><div class="gate-icon data-gate" aria-hidden="true"></div><h3>대표성</h3><p>제품·설비·lot·시간 분포</p></article><div class="gate-arrow">→</div>
+          <article><span>02</span><div class="gate-icon stress-gate" aria-hidden="true"></div><h3>Stress slice</h3><p>오염·shift·희귀 조합</p></article><div class="gate-arrow">→</div>
+          <article><span>03</span><div class="gate-icon cost-gate" aria-hidden="true"></div><h3>비용 기반 기준</h3><p>FA · FR · escape risk</p></article><div class="gate-arrow">→</div>
+          <article><span>04</span><div class="gate-icon handoff-gate" aria-hidden="true"></div><h3>거부·이관</h3><p>언제 사람이 판단할지</p></article><div class="gate-arrow">→</div>
+          <article><span>05</span><div class="gate-icon monitor-gate" aria-hidden="true"></div><h3>Drift 감시</h3><p>배포 후 성능 변화</p></article>
+        </div>
+        <div class="deployment-ladder"><span>BENCHMARK</span><i></i><span>PILOT</span><i></i><span>PRODUCTION</span><i></i><strong>CONTINUOUS QA</strong></div>
+        <div class="reality-check neutral"><span>OWNERSHIP</span>공정·품질·AI·인프라 조직이 함께 시험 공간과 허용 위험을 정의해야 합니다.</div>
+      </div>
+      <aside class="speaker-notes">품질팀이 맡을 수 있는 구체적 영역을 제시합니다. 특히 평균 성능 승인보다 slice별 stress test, 비용 기반 threshold, 사람 이관 기준, drift monitoring을 강조합니다.</aside>
+    </section>
+
+    <section class="slide slide-closing theme-black" data-title="SOTA는 출발점" aria-labelledby="slide-17-title">
+      <div class="ambient closing-glow" aria-hidden="true"></div>
+      <div class="slide-inner closing-layout">
+        <p class="eyebrow">TAKEAWAY</p>
+        <h2 id="slide-17-title">SOTA는 출발점이지,<br><span class="text-blue">Sign-off가 아닙니다.</span></h2>
+        <p class="closing-subtitle">좋은 AI는 모든 답을 내는 모델이 아니라,<br>언제 사람에게 넘겨야 하는지 아는 시스템입니다.</p>
+        <div class="closing-questions"><article><span>01</span><strong>무엇을<br>못 봤나?</strong></article><article><span>02</span><strong>언제<br>거부하나?</strong></article><article><span>03</span><strong>틀리면<br>비용은?</strong></article></div>
+        <div class="closing-footer"><span>ICML 2026 · AI × Quality</span><button id="sources-button" type="button">Sources & controls <span>↗</span></button></div>
+      </div>
+      <aside class="speaker-notes">AI를 쓰지 말자는 결론이 아닙니다. 제한된 역할과 guardrail 안에서 더 빠르게 쓰되, benchmark 점수를 양산 sign-off와 혼동하지 말자는 결론입니다.</aside>
+    </section>
+  </main>
+
+  <nav class="slide-controls" aria-label="슬라이드 이동">
+    <button id="prev-button" type="button" aria-label="이전 슬라이드"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+    <span id="slide-counter" aria-live="polite">01 / 17</span>
+    <button id="next-button" type="button" aria-label="다음 슬라이드"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
+  </nav>
+  <div class="progress-track" aria-hidden="true"><div id="progress-bar"></div></div>
+
+  <aside id="notes-panel" class="utility-panel notes-panel" aria-hidden="true" aria-label="발표자 노트">
+    <div class="panel-head"><div><span>PRESENTER NOTES</span><strong id="notes-title">AI가 사람보다 잘하나요?</strong></div><button type="button" class="panel-close" aria-label="발표자 노트 닫기">×</button></div>
+    <p id="notes-copy"></p>
+    <div class="notes-shortcuts"><span><kbd>←</kbd><kbd>→</kbd> 이동</span><span><kbd>N</kbd> 노트</span><span><kbd>O</kbd> 전체 보기</span><span><kbd>F</kbd> 전체 화면</span></div>
+  </aside>
+
+  <aside id="sources-panel" class="utility-panel sources-panel" aria-hidden="true" aria-label="출처 및 사용법">
+    <div class="panel-head"><div><span>PRIMARY SOURCES</span><strong>논문 · ICML 공식 자료</strong></div><button type="button" class="panel-close" aria-label="출처 패널 닫기">×</button></div>
+    <div class="source-list">
+      <a href="https://icml.cc/Downloads/2026" target="_blank" rel="noopener noreferrer"><span>Program</span>ICML 2026 official papers</a>
+      <a href="https://arxiv.org/abs/2601.22763" target="_blank" rel="noopener noreferrer"><span>Inspection</span>RAD</a>
+      <a href="https://arxiv.org/abs/2606.25273" target="_blank" rel="noopener noreferrer"><span>Inspection</span>CoGeoAD</a>
+      <a href="https://arxiv.org/abs/2605.26676" target="_blank" rel="noopener noreferrer"><span>Data quality</span>MeDS</a>
+      <a href="https://arxiv.org/abs/2604.24972" target="_blank" rel="noopener noreferrer"><span>Medical</span>Dynamic Decision Learning</a>
+      <a href="https://arxiv.org/abs/2605.30794" target="_blank" rel="noopener noreferrer"><span>Drawing</span>MechVQA</a>
+      <a href="https://icml.cc/virtual/2026/poster/65113" target="_blank" rel="noopener noreferrer"><span>IC geometry</span>LMM4-IC4K</a>
+      <a href="https://arxiv.org/abs/2602.16953" target="_blank" rel="noopener noreferrer"><span>Verification</span>LLM4Cov</a>
+      <a href="https://arxiv.org/abs/2605.20287" target="_blank" rel="noopener noreferrer"><span>EDA</span>FusionCell</a>
+      <a href="https://arxiv.org/abs/2604.10718" target="_blank" rel="noopener noreferrer"><span>Calibration</span>SciPredict</a>
+      <a href="https://icml.cc/virtual/2026/poster/65518" target="_blank" rel="noopener noreferrer"><span>Evaluation</span>Visual anomaly metrics</a>
+    </div>
+    <p class="design-credit">Visual direction inspired by the independent <a href="https://getdesign.md/apple/design-md" target="_blank" rel="noopener noreferrer">getdesign.md Apple analysis</a>. No Apple assets or logos are used.</p>
+  </aside>
+
+  <div id="live-region" class="sr-only" aria-live="polite"></div>
+  <script src="slides.js"></script>
+</body>
+</html>
