@@ -177,6 +177,8 @@ body.deck-restoring .slide {
   letter-spacing: -.062em;
   line-height: .98;
   text-wrap: balance;
+  overflow-wrap: normal;
+  line-break: strict;
 }
 
 .slide h1,
@@ -193,9 +195,29 @@ body.deck-restoring .slide {
   display: block;
 }
 
+.copy-line {
+  display: block;
+}
+
+.title-unit,
+.term-unit {
+  white-space: nowrap;
+}
+
 .slide h2.structured-title {
-  font-size: clamp(2.8rem, 4.35vw, 5.2rem);
+  --title-size: clamp(2.8rem, 4.35vw, 5.2rem);
+  --title-size-short: clamp(2.75rem, 4.2vw, 4.9rem);
   line-height: 1.01;
+}
+
+.slide h2.calibration-title {
+  --title-size: clamp(2.6rem, 3.8vw, 4.65rem);
+  --title-size-short: clamp(2.55rem, 3.7vw, 4.35rem);
+}
+
+.slide h2.single-line-title {
+  --title-size: clamp(2.8rem, 3.8vw, 4.8rem);
+  --title-size-short: clamp(2.7rem, 3.65vw, 4.35rem);
 }
 
 .slide h1 {
@@ -203,7 +225,9 @@ body.deck-restoring .slide {
 }
 
 .slide h2 {
-  font-size: clamp(3.1rem, 5.45vw, 6.4rem);
+  --title-size: clamp(3.1rem, 5.45vw, 6.4rem);
+  --title-size-short: clamp(2.8rem, 4.8vw, 5.1rem);
+  font-size: var(--title-size);
 }
 
 .text-blue {
@@ -906,9 +930,10 @@ body.deck-restoring .slide {
   align-self: center;
 }
 
-.tax-copy h2 {
+.slide .tax-copy h2 {
   max-width: none;
-  font-size: clamp(2.65rem, 3.9vw, 4.7rem);
+  --title-size: clamp(2.65rem, 3.85vw, 4.7rem);
+  --title-size-short: clamp(2.65rem, 3.85vw, 4.7rem);
   line-height: 1.01;
 }
 
@@ -1162,8 +1187,9 @@ body.deck-restoring .slide {
   margin-bottom: 12px;
 }
 
-.paper-detail-heading h2 {
-  font-size: clamp(2.65rem, 4.2vw, 4.9rem);
+.slide .paper-detail-heading h2 {
+  --title-size: clamp(2.65rem, 4.2vw, 4.9rem);
+  --title-size-short: clamp(2.45rem, 3.9vw, 4.55rem);
   line-height: 1.01;
 }
 
@@ -2648,10 +2674,10 @@ body.deck-restoring .slide {
 /* Calibration */
 .calibration-layout {
   display: grid;
-  grid-template-columns: .95fr 1.05fr;
+  grid-template-columns: 1.08fr .92fr;
   grid-template-rows: 1fr auto;
   align-items: center;
-  gap: 30px 60px;
+  gap: 30px 50px;
 }
 
 .calibration-copy h2 {
@@ -2773,10 +2799,10 @@ body.deck-restoring .slide {
 /* Metric trap */
 .metric-trap-layout {
   display: grid;
-  grid-template-columns: .84fr 1.16fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr auto auto;
   align-items: center;
-  gap: 18px 60px;
+  gap: 18px 50px;
 }
 
 .metric-trap-copy h2 {
@@ -3063,8 +3089,9 @@ body.deck-restoring .slide {
   text-align: center;
 }
 
-.closing-layout h2 {
-  font-size: clamp(3.8rem, 7vw, 8.2rem);
+.slide .closing-layout h2 {
+  --title-size: clamp(3.8rem, 7vw, 8.2rem);
+  --title-size-short: clamp(3.2rem, 5.8vw, 6.5rem);
 }
 
 .closing-subtitle {
@@ -3392,7 +3419,9 @@ body.overview-mode {
 
 /* Responsive */
 @media (min-width: 901px) {
-  .headline-line {
+  .headline-line,
+  .semantic-phrase,
+  .copy-line {
     white-space: nowrap;
   }
 }
@@ -3416,6 +3445,11 @@ body.overview-mode {
 
   .paper-detail-grid {
     gap: 8px;
+  }
+
+  .slide .paper-detail-heading h2 {
+    --title-size: clamp(2.1rem, 3.5vw, 4rem);
+    --title-size-short: clamp(2.1rem, 3.5vw, 4rem);
   }
 
   .paper-detail-card {
@@ -3512,6 +3546,19 @@ body.overview-mode {
 
   .slide h2.structured-title {
     font-size: clamp(2.6rem, 9.5vw, 5.2rem);
+  }
+
+  .headline-line {
+    display: inline;
+    white-space: normal;
+  }
+
+  .headline-line.title-unit {
+    white-space: nowrap;
+  }
+
+  .preserve-lines .headline-line {
+    display: block;
   }
 
   .paper-detail-layout {
@@ -3689,6 +3736,16 @@ body.overview-mode {
 
   .slide h2 {
     font-size: clamp(2.5rem, 12vw, 4.4rem);
+  }
+
+  .statement-title {
+    font-size: clamp(2.5rem, 11vw, 4.2rem) !important;
+  }
+
+  .slide h2.calibration-title,
+  .slide h2.single-line-title,
+  .slide h2.mobile-compact-title {
+    font-size: clamp(2.1rem, 9vw, 3.8rem);
   }
 
   .paper-detail-heading h2 {
@@ -3891,6 +3948,14 @@ body.overview-mode {
   }
 }
 
+@media (max-width: 359px) {
+  .title-unit,
+  .headline-line.title-unit,
+  .term-unit {
+    white-space: normal;
+  }
+}
+
 @media (max-height: 800px) and (min-width: 901px) {
   .slide-inner {
     padding-top: 72px;
@@ -3902,7 +3967,7 @@ body.overview-mode {
   }
 
   .slide h2 {
-    font-size: clamp(2.8rem, 4.8vw, 5.1rem);
+    font-size: var(--title-size-short);
   }
 
   .case-lead,
