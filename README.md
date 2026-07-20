@@ -6,6 +6,8 @@
 
 기본 발표 모드에서는 활성 슬라이드 한 장만 화면에 표시됩니다. 전체 22장을 한 페이지에서 보고 싶을 때만 `O` 키로 overview를 엽니다. 7개 논문 사례는 각각 `핵심 아이디어 → 논문 상세` 2장 세트로 구성되어 있습니다.
 
+발표 연습용 전체 대본은 [PRESENTER_SCRIPT.md](PRESENTER_SCRIPT.md)에 있습니다. 본문 기준 약 22분, 화면 전환과 짧은 호흡을 포함하면 약 23~25분 분량입니다.
+
 ## 실행
 
 별도 설치나 빌드 과정은 없습니다.
@@ -45,6 +47,7 @@ python3 -m http.server 4173
 ## 파일
 
 - `index.html`: 22장 콘텐츠, 발표자 노트, 출처 링크
+- `PRESENTER_SCRIPT.md`: 22장 전체 발표 대본, 전환 문장, 발표자 주의사항, 예상 질문
 - `styles.css`: Apple-inspired 시각 시스템, 반응형·인쇄 스타일
 - `slides.js`: 키보드·터치 이동, 전체 보기, 노트, 전체 화면
 - `assets/PretendardVariable.woff2`: 발표 PC와 무관하게 한글을 표시하는 로컬 웹폰트
