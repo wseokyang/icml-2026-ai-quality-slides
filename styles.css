@@ -4293,29 +4293,45 @@ body.deck-restoring .slide {
 .qa-photo-strip {
   width: 100%;
   margin: 12px 0 0;
+  background: #e9eceb;
 }
 
-.qa-photo-strip img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  object-position: center 51%;
+.qa-photo-panels {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2px;
+  background: #fff;
 }
+
+.qa-photo-panels span {
+  min-width: 0;
+  background-color: #e9eceb;
+  background-image: url("assets/illustrations/ic-inspection-field-v1.webp");
+  background-repeat: no-repeat;
+  background-size: 300% auto;
+}
+
+.qa-photo-panels span:nth-child(1) { background-position: left center; }
+.qa-photo-panels span:nth-child(2) { background-position: center; }
+.qa-photo-panels span:nth-child(3) { background-position: right center; }
 
 .qa-photo-strip figcaption {
   position: absolute;
   z-index: 2;
-  left: 5px;
-  right: 5px;
+  left: 0;
+  right: 0;
   bottom: 5px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 4px;
+  gap: 2px;
 }
 
 .qa-photo-strip figcaption span {
   min-width: 0;
+  margin: 0 4px;
   padding: 3px 2px;
   overflow: hidden;
   border-radius: 5px;

@@ -8,7 +8,7 @@
   <meta name="description" content="TSP 품질 엔지니어를 위한 ICML 2026 후기 — benchmark와 현실 데이터의 차이를 중심으로">
   <title>ICML 2026 — AI의 최고점과 현실의 품질</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230071e3'/%3E%3Ctext x='50' y='66' text-anchor='middle' font-family='Arial' font-size='48' font-weight='700' fill='white'%3EAI%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260720-2">
 </head>
 <body>
   <a class="skip-link" href="#deck">슬라이드 본문으로 이동</a>
@@ -479,7 +479,7 @@
         </div>
         <ol class="qa-workflow" aria-label="모델 점수를 제품 품질로 전환하는 다섯 단계">
           <li class="qa-step qa-represent"><header><span>01</span><small>승인 전 · DATA</small></header><h3>현장을 닮게 뽑기</h3><div class="qa-mini coverage-mini" role="img" aria-label="현장 데이터의 제품, 설비, lot, 주야간 구성을 평가셋에 같은 비율로 담는 모습"><div class="sample-tray field"><b>현장</b><i></i><i></i><i></i><i></i><i></i><i></i></div><em>→</em><div class="sample-tray test"><b>평가셋</b><i></i><i></i><i></i><i></i><i></i><i></i></div></div><p>제품 · 설비 · Lot · 주야간</p></li>
-          <li class="qa-step qa-stress"><header><span>02</span><small>승인 전 · STRESS</small></header><h3>일부러 깨뜨려 보기</h3><figure class="qa-mini qa-photo-strip"><img src="assets/illustrations/ic-inspection-field-v1.webp" alt="정상 IC를 위치 이동, 조명 반사, 초점 열화 조건에서 촬영한 AI 생성 설명 이미지"><b class="qa-synthetic-label">AI 생성 · 실데이터 아님</b><figcaption><span>각도</span><span>반사</span><span>초점</span></figcaption></figure><p>각도 · 반사 · 초점 · AI 생성 예시</p></li>
+          <li class="qa-step qa-stress"><header><span>02</span><small>승인 전 · STRESS</small></header><h3>일부러 깨뜨려 보기</h3><figure class="qa-mini qa-photo-strip" role="img" aria-label="정상 IC를 위치 이동, 조명 반사, 초점 열화 조건에서 촬영한 AI 생성 설명 이미지"><div class="qa-photo-panels" aria-hidden="true"><span></span><span></span><span></span></div><b class="qa-synthetic-label">AI 생성 · 실데이터 아님</b><figcaption><span>각도</span><span>반사</span><span>초점</span></figcaption></figure><p>각도 · 반사 · 초점 · AI 생성 예시</p></li>
           <li class="qa-step qa-cost"><header><span>03</span><small>승인 전 · 기준선</small></header><h3>오검·미검 비용으로 선 긋기</h3><div class="qa-mini cost-mini" role="img" aria-label="정상을 재검하는 비용과 불량이 통과하는 위험 사이에서 운영 threshold를 정하는 모습"><div><span>정상 → 재검</span><small>재검 비용</small></div><div class="danger"><span>불량 → 통과</span><small>유출 위험</small></div><div class="threshold"><i></i><b>운영 기준</b></div></div><p>오검 · 미검 · 유출 비용</p></li>
           <li class="qa-step qa-handoff"><header><span>04</span><small>운영 중 · PRODUCTION</small></header><h3>애매하면 HOLD</h3><div class="qa-mini handoff-mini" role="img" aria-label="AI 판정이 조건을 충족하면 자동 처리하고 애매하거나 미지 조건이면 보류 후 사람이 검토하는 흐름"><b>AI 판정</b><div><span>조건 충족<strong>자동 처리</strong></span><span>애매 · OOD<strong>HOLD → 사람</strong></span></div></div><p>거부 · 보류 · 이관 기준</p></li>
           <li class="qa-step qa-drift"><header><span>05</span><small>변화 시 · RE-APPROVAL</small></header><h3>조건이 바뀌면 재승인</h3><div class="qa-mini drift-mini" role="img" aria-label="운영 지표가 허용 범위를 벗어나 기준 이탈 경고가 발생하는 시계열"><span>허용 범위</span><svg viewBox="0 0 180 74" aria-hidden="true"><rect x="8" y="25" width="164" height="27" rx="7"></rect><path d="M12 42 C34 38 45 47 64 41 S98 36 116 43 S139 46 151 28 S164 12 172 9"></path><circle cx="172" cy="9" r="5"></circle></svg><b>기준 이탈</b></div><p>분포 · 오검률 · 장비 변화</p></li>
