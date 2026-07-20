@@ -82,15 +82,25 @@
         </div>
         <div class="world-comparison">
           <article class="world-card benchmark-world">
-            <div class="world-card-head"><span class="status-dot green"></span><span>BENCHMARK</span><span class="world-badge">Clean room</span></div>
-            <div class="clean-sample-grid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-            <ul class="plain-list"><li>고정된 카메라와 조명</li><li>검수된 정답 라벨</li><li>알려진 불량 유형</li><li>한 번 정한 평가 규칙</li></ul>
+            <div class="world-card-head world-card-title"><div><span>BENCHMARK</span><strong>조건을 고정한 비교 시험</strong></div><span class="world-badge">조건 고정</span></div>
+            <div class="inspection-strip is-fixed" role="img" aria-label="같은 카메라와 조명에서 IC 패키지의 정상, 알려진 scratch, 알려진 stain을 같은 위치로 촬영한 세 장의 검사 이미지">
+              <div class="inspection-thumb normal"><i class="package-part"></i><span>정상</span></div>
+              <div class="inspection-thumb scratch"><i class="package-part"></i><span>알려진 scratch</span></div>
+              <div class="inspection-thumb stain"><i class="package-part"></i><span>알려진 stain</span></div>
+            </div>
+            <dl class="condition-grid fixed"><div><dt>카메라</dt><dd>CAM 01 · 고정</dd></div><div><dt>조명</dt><dd>동일 설정</dd></div><div><dt>제품 범위</dt><dd>사전 정의</dd></div><div><dt>정답</dt><dd>검수 완료</dd></div></dl>
+            <p class="world-question"><span>이 시험의 질문</span><strong>같은 조건에서 누가 더 좋은가?</strong></p>
           </article>
-          <div class="versus" aria-hidden="true">VS</div>
+          <div class="deployment-bridge" aria-hidden="true"><span>같은 모델</span><b>→</b><small>DEPLOY</small></div>
           <article class="world-card reality-world">
-            <div class="world-card-head"><span class="status-dot orange"></span><span>REALITY</span><span class="world-badge warning">Factory floor</span></div>
-            <div class="dirty-sample-field" aria-hidden="true"><span class="noise n1"></span><span class="noise n2"></span><span class="noise n3"></span><span class="noise n4"></span><span class="noise n5"></span><span class="noise n6"></span><span class="noise n7"></span><span class="noise n8"></span><span class="noise n9"></span><span class="noise n10"></span><span class="glare"></span></div>
-            <ul class="plain-list"><li>반사·blur·오염·가림</li><li>설비·lot·revision 변화</li><li>미지·복합·희귀 불량</li><li>사람끼리도 다른 판정</li></ul>
+            <div class="world-card-head world-card-title"><div><span>REALITY</span><strong>조건이 움직이는 운영 환경</strong></div><span class="world-badge warning">계속 변동</span></div>
+            <div class="inspection-strip is-variable" role="img" aria-label="같은 IC 패키지가 설비 변경으로 이동하고, lot 변화로 반사가 생기며, PM 이후 초점과 가림 조건이 달라진 세 장의 검사 이미지">
+              <div class="inspection-thumb shifted"><i class="package-part"></i><span>설비 변경</span></div>
+              <div class="inspection-thumb condition-glare"><i class="package-part"></i><span>LOT 변경</span></div>
+              <div class="inspection-thumb occluded"><i class="package-part"></i><span>PM 이후</span></div>
+            </div>
+            <dl class="condition-grid variable"><div><dt>카메라</dt><dd>여러 설비</dd></div><div><dt>조명</dt><dd>반사 · 열화</dd></div><div><dt>제품 범위</dt><dd>Lot · Revision 변화</dd></div><div><dt>정답</dt><dd>판정 불일치</dd></div></dl>
+            <p class="world-question"><span>현장의 질문</span><strong>조건이 바뀌어도 계속 믿을 수 있는가?</strong></p>
           </article>
         </div>
         <div class="reality-check"><span>REALITY CHECK</span>현실 데이터는 더 지저분할 뿐 아니라, 시간이 지나며 계속 달라집니다.</div>
@@ -119,12 +129,32 @@
       <div class="slide-inner">
         <p class="eyebrow dark">WHAT RESEARCHERS CARE ABOUT</p>
         <h2 id="slide-5-title" class="preserve-lines"><span class="headline-line">그래서 연구의 관심은</span> <span class="headline-line"><span class="text-blue">정확도 밖</span>으로 넓어지고 있습니다.</span></h2>
-        <div class="trend-grid">
-          <article class="trend-card"><span class="trend-index">01</span><div class="trend-icon icon-one" aria-hidden="true"></div><h3>Few / Zero-shot</h3><p>불량 표본이 거의 없어도 찾기</p></article>
-          <article class="trend-card"><span class="trend-index">02</span><div class="trend-icon icon-layers" aria-hidden="true"></div><h3>Multimodal</h3><p>RGB · 3D · 도면 · 센서 함께 보기</p></article>
-          <article class="trend-card"><span class="trend-index">03</span><div class="trend-icon icon-loop" aria-hidden="true"></div><h3>Robust Learning</h3><p>오염 데이터에도 성능 지키기</p></article>
-          <article class="trend-card"><span class="trend-index">04</span><div class="trend-icon icon-wave" aria-hidden="true"></div><h3>Domain Specialist</h3><p>전문 데이터로 특정 문제 잘 풀기</p></article>
-          <article class="trend-card"><span class="trend-index">05</span><div class="trend-icon icon-shield" aria-hidden="true"></div><h3>Reliability</h3><p>언제 믿고 언제 거부할지 측정하기</p></article>
+        <div class="trend-grid scenario-grid">
+          <article class="trend-card scenario-card">
+            <header class="scenario-heading"><span class="trend-index">01</span><h3>Few / Zero-shot</h3></header>
+            <ol class="scenario-flow" aria-label="정상 이미지 한 장을 기준으로 부분을 비교해 이상 위치를 찾는 과정"><li class="scenario-step"><span class="stage-role">INPUT</span><span class="stage-art art-normal" aria-hidden="true"><i></i></span><strong>정상 ×1</strong></li><li class="scenario-step"><span class="stage-role">PROCESS</span><span class="stage-art art-compare" aria-hidden="true"></span><strong>부분 비교</strong></li><li class="scenario-step"><span class="stage-role">OUTPUT</span><span class="stage-art art-heat" aria-hidden="true"></span><strong>이상 위치</strong></li></ol>
+            <p class="scenario-copy">불량 표본 없이 새 검사를 시작합니다.</p>
+          </article>
+          <article class="trend-card scenario-card">
+            <header class="scenario-heading"><span class="trend-index">02</span><h3>Multimodal</h3></header>
+            <ol class="scenario-flow" aria-label="RGB 색 정보와 3D 형상 정보를 결합해 복합 불량을 찾는 과정"><li class="scenario-step"><span class="stage-role">INPUT</span><span class="stage-art art-modal" aria-hidden="true"><i>RGB</i><i>3D</i></span><strong>색 + 형상</strong></li><li class="scenario-step"><span class="stage-role">PROCESS</span><span class="stage-art art-fuse" aria-hidden="true"></span><strong>정보 결합</strong></li><li class="scenario-step"><span class="stage-role">OUTPUT</span><span class="stage-art art-fused" aria-hidden="true"></span><strong>복합 불량</strong></li></ol>
+            <p class="scenario-copy">한 센서의 사각을 다른 센서가 보완합니다.</p>
+          </article>
+          <article class="trend-card scenario-card">
+            <header class="scenario-heading"><span class="trend-index">03</span><h3>Robust Learning</h3></header>
+            <ol class="scenario-flow" aria-label="오염된 학습 폴더에서 반복되는 정상 패턴을 골라 성능을 지키는 과정"><li class="scenario-step"><span class="stage-role">INPUT</span><span class="stage-art art-noisy" aria-hidden="true"><i></i><i></i><i class="bad"></i><i></i><i></i><i class="bad"></i></span><strong>오염 폴더</strong></li><li class="scenario-step"><span class="stage-role">PROCESS</span><span class="stage-art art-filter" aria-hidden="true"></span><strong>패턴 선별</strong></li><li class="scenario-step"><span class="stage-role">OUTPUT</span><span class="stage-art art-stable" aria-hidden="true"></span><strong>성능 유지</strong></li></ol>
+            <p class="scenario-copy">잘못 섞인 학습 샘플의 영향을 줄입니다.</p>
+          </article>
+          <article class="trend-card scenario-card">
+            <header class="scenario-heading"><span class="trend-index">04</span><h3>Domain Specialist</h3></header>
+            <ol class="scenario-flow" aria-label="전문 도면과 질문을 학습해 근거와 답을 내는 과정"><li class="scenario-step"><span class="stage-role">INPUT</span><span class="stage-art art-drawing" aria-hidden="true"></span><strong>도면 + 질문</strong></li><li class="scenario-step"><span class="stage-role">PROCESS</span><span class="stage-art art-specialist" aria-hidden="true"><b>전문</b></span><strong>전문 학습</strong></li><li class="scenario-step"><span class="stage-role">OUTPUT</span><span class="stage-art art-answer" aria-hidden="true"><b>26.5</b></span><strong>근거 + 답</strong></li></ol>
+            <p class="scenario-copy">전문 데이터와 채점으로 좁고 깊게 풉니다.</p>
+          </article>
+          <article class="trend-card scenario-card">
+            <header class="scenario-heading"><span class="trend-index">05</span><h3>Reliability</h3></header>
+            <ol class="scenario-flow" aria-label="모델 예측을 점검해 자동 처리와 사람 검토로 나누는 과정"><li class="scenario-step"><span class="stage-role">INPUT</span><span class="stage-art art-confidence" aria-hidden="true"><b>SCORE</b></span><strong>모델 예측</strong></li><li class="scenario-step"><span class="stage-role">PROCESS</span><span class="stage-art art-gate" aria-hidden="true"><b>?</b></span><strong>신뢰도 점검</strong></li><li class="scenario-step"><span class="stage-role">OUTPUT</span><span class="stage-art art-route" aria-hidden="true"><i>AUTO</i><i>사람 검토</i></span><strong>자동 / 검토</strong></li></ol>
+            <p class="scenario-copy">애매한 판단을 사람에게 넘길 기준을 만듭니다.</p>
+          </article>
         </div>
         <p class="method-note">품질 조직에 설명하기 좋은 ICML 2026 응용 논문을 중심으로 선별한 흐름이며, 학회 전체 분야의 정량 분류는 아닙니다.</p>
       </div>
@@ -439,14 +469,14 @@
           <h2 id="slide-14-title"><span class="headline-line">그래서 품질 엔지니어의 역할이</span> <span class="headline-line text-blue">더 커집니다.</span></h2>
           <p class="case-lead dark-lead">모델을 만드는 것과, 모델을 <span class="term-unit">믿어도 되는 조건</span>을 만드는 것은 다른 일입니다.</p>
         </div>
-        <div class="gates-flow" aria-label="AI 품질을 위한 다섯 단계 게이트">
-          <article><span>01</span><div class="gate-icon data-gate" aria-hidden="true"></div><h3>대표성</h3><p>제품·설비·lot·시간 분포</p></article><div class="gate-arrow">→</div>
-          <article><span>02</span><div class="gate-icon stress-gate" aria-hidden="true"></div><h3>Stress slice</h3><p>오염·shift·희귀 조합</p></article><div class="gate-arrow">→</div>
-          <article><span>03</span><div class="gate-icon cost-gate" aria-hidden="true"></div><h3>비용 기반 기준</h3><p>FA · FR · escape risk</p></article><div class="gate-arrow">→</div>
-          <article><span>04</span><div class="gate-icon handoff-gate" aria-hidden="true"></div><h3>거부·이관</h3><p>언제 사람이 판단할지</p></article><div class="gate-arrow">→</div>
-          <article><span>05</span><div class="gate-icon monitor-gate" aria-hidden="true"></div><h3>Drift 감시</h3><p>배포 후 성능 변화</p></article>
-        </div>
-        <div class="deployment-ladder"><span>BENCHMARK</span><i></i><span>PILOT</span><i></i><span>PRODUCTION</span><i></i><strong>CONTINUOUS QA</strong></div>
+        <ol class="qa-workflow" aria-label="모델 점수를 제품 품질로 전환하는 다섯 단계">
+          <li class="qa-step qa-represent"><header><span>01</span><small>BENCHMARK</small></header><h3>현장을 닮게 뽑기</h3><div class="qa-mini coverage-mini" role="img" aria-label="현장 데이터의 제품, 설비, lot, 주야간 구성을 평가셋에 같은 비율로 담는 모습"><div class="sample-tray field"><b>현장</b><i></i><i></i><i></i><i></i><i></i><i></i></div><em>→</em><div class="sample-tray test"><b>평가셋</b><i></i><i></i><i></i><i></i><i></i><i></i></div></div><p>제품 · 설비 · Lot · 주야간</p></li>
+          <li class="qa-step qa-stress"><header><span>02</span><small>PILOT · STRESS</small></header><h3>가혹 조건으로 흔들기</h3><div class="qa-mini stress-mini" role="img" aria-label="같은 검사 이미지를 오염, 위치 이동, 흐림, 희귀 조건 조합으로 바꿔 시험하는 모습"><i class="dirty">오염</i><i class="shift">Shift</i><i class="blur">흐림</i><i class="rare">희귀 조합</i></div><p>평균 밖의 실패 조건 확인</p></li>
+          <li class="qa-step qa-cost"><header><span>03</span><small>PILOT · THRESHOLD</small></header><h3>오류 비용으로 선 긋기</h3><div class="qa-mini cost-mini" role="img" aria-label="정상을 재검하는 비용과 불량이 통과하는 위험 사이에서 운영 threshold를 정하는 모습"><div><span>정상 → 재검</span><small>재검 비용</small></div><div class="danger"><span>불량 → 통과</span><small>유출 위험</small></div><div class="threshold"><i></i><b>운영 기준</b></div></div><p>오검 · 미검 · 유출 비용</p></li>
+          <li class="qa-step qa-handoff"><header><span>04</span><small>PRODUCTION</small></header><h3>애매하면 사람에게</h3><div class="qa-mini handoff-mini" role="img" aria-label="AI 판정이 조건을 충족하면 자동 처리하고 애매하거나 미지 조건이면 보류 후 사람이 검토하는 흐름"><b>AI 판정</b><div><span>조건 충족<strong>자동 처리</strong></span><span>애매 · OOD<strong>사람 검토</strong></span></div></div><p>거부 · 보류 · 이관 기준</p></li>
+          <li class="qa-step qa-drift"><header><span>05</span><small>CONTINUOUS QA</small></header><h3>변하면 다시 검증</h3><div class="qa-mini drift-mini" role="img" aria-label="운영 지표가 허용 범위를 벗어나 기준 이탈 경고가 발생하는 시계열"><span>허용 범위</span><svg viewBox="0 0 180 74" aria-hidden="true"><rect x="8" y="25" width="164" height="27" rx="7"></rect><path d="M12 42 C34 38 45 47 64 41 S98 36 116 43 S139 46 151 28 S164 12 172 9"></path><circle cx="172" cy="9" r="5"></circle></svg><b>기준 이탈</b></div><p>분포 · 오검률 · 장비 변화</p></li>
+        </ol>
+        <div class="qa-feedback"><span>↩</span> 기준 이탈 시 평가셋과 threshold를 다시 검증</div>
         <div class="reality-check neutral"><span>OWNERSHIP</span>공정·품질·AI·인프라 조직이 함께 시험 공간과 허용 위험을 정의해야 합니다.</div>
       </div>
       <aside class="speaker-notes">품질팀이 맡을 수 있는 구체적 영역을 제시합니다. 특히 평균 성능 승인보다 slice별 stress test, 비용 기반 threshold, 사람 이관 기준, drift monitoring을 강조합니다.</aside>
