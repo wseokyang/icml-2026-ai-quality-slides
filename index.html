@@ -156,14 +156,17 @@
           <div class="paper-id-card"><span>RAD</span><strong>Retrieval-based AD</strong><small>MVTec-AD · Table 1</small></div>
         </header>
         <div class="paper-detail-grid">
-          <article class="paper-detail-card"><span class="detail-kicker">01 · TASK</span><h3>무엇을 넣고 받나</h3><p>검사 이미지와 정상 reference memory를 비교해 제품 점수와 불량 위치 heatmap을 함께 냅니다.</p><ul class="detail-list"><li>여러 제품군을 하나의 모델로 처리</li><li>Frozen DINOv3-B 특징 사용</li><li>현장 데이터로 weight 재학습 없음</li></ul></article>
-          <article class="paper-detail-card"><span class="detail-kicker">02 · BENCHMARK</span><h3>시험지는 네 종류</h3><p>표준 dataset과 제품군별 정상 이미지가 1·2·4장뿐인 few-shot 조건을 함께 시험했습니다.</p><ul class="detail-list"><li>MVTec-AD 15개 제품군</li><li>VisA 12개 제품군</li><li>Real-IAD 151,230장</li><li>3D-ADAM은 RGB만 사용</li></ul></article>
-          <article class="paper-detail-card"><span class="detail-kicker">03 · METHOD</span><h3>검색 범위를 좁힌다</h3><ol class="detail-steps"><li><b>1</b><span>정상 이미지의 4개 층 특징을 memory에 저장</span></li><li><b>2</b><span>전체 모습이 비슷한 정상 제품부터 검색</span></li><li><b>3</b><span>같은 위치 주변 patch 거리를 합쳐 heatmap 생성</span></li></ol><div class="detail-definition">DINOv3 layer 4 · 7 · 10 · 12</div></article>
-          <article class="paper-detail-card"><span class="detail-kicker">04 · RESULT</span><h3>AUROC만 보지 않는다</h3><div class="detail-table"><div><span>1-shot P-AUROC<br>IIPAD → RAD</span><strong>96.4 → 96.7</strong></div><div><span>1-shot AUPRO</span><strong>89.8 → 91.9</strong></div><div class="highlight"><span>Full-data P-AP<br>Dinomaly → RAD</span><strong>69.3 → 75.6</strong></div><div><span>Full-data max-F1</span><strong>69.2 → 71.3</strong></div></div></article>
+          <figure class="paper-detail-card paper-figure-card">
+            <span class="detail-kicker">01 · DATA AT A GLANCE</span>
+            <div class="paper-figure-media is-paper"><img src="assets/papers/rad-figure-1.webp" alt="불량 후보 이미지, 정상 reference 한 장, RAD가 만든 이상 heatmap, 사람이 표시한 정답 mask를 나란히 비교한 그림"></div>
+            <figcaption><div><strong>정상 1장과 비교해 의심 위치를 칠합니다.</strong><span>MVTec-AD 15종 · VisA 12종 · full / 1·2·4-shot 평가</span></div><a href="https://arxiv.org/abs/2601.22763" target="_blank" rel="noopener noreferrer">RAD Fig. 1 ↗</a></figcaption>
+          </figure>
+          <article class="paper-detail-card"><span class="detail-kicker">02 · METHOD</span><h3>검색 범위를 좁힌다</h3><ol class="detail-steps"><li><b>1</b><span>정상 이미지의 4개 층 특징을 memory에 저장</span></li><li><b>2</b><span>전체 모습이 비슷한 정상 제품부터 검색</span></li><li><b>3</b><span>같은 위치 주변 patch 거리를 합쳐 heatmap 생성</span></li></ol><div class="detail-definition">DINOv3 layer 4 · 7 · 10 · 12</div></article>
+          <article class="paper-detail-card"><span class="detail-kicker">03 · RESULT</span><h3>AUROC만 보지 않는다</h3><div class="detail-table"><div><span>1-shot P-AUROC<br>IIPAD → RAD</span><strong>96.4 → 96.7</strong></div><div><span>1-shot AUPRO</span><strong>89.8 → 91.9</strong></div><div class="highlight"><span>Full-data P-AP<br>Dinomaly → RAD</span><strong>69.3 → 75.6</strong></div><div><span>Full-data max-F1</span><strong>69.2 → 71.3</strong></div></div></article>
         </div>
         <footer class="paper-detail-footer"><div class="paper-scope"><span>MODEL<strong>Frozen</strong></span><span>REFERENCE<strong>정상 ≥1장</strong></span><span>OUTPUT<strong>점수 + 위치</strong></span></div><div class="detail-interpretation"><strong>QUALITY READ</strong>정상 memory가 조명·각도·lot 변동을 대표하지 못하면 정상 변화도 불량처럼 멀게 보입니다. max-F1 역시 정답을 본 뒤 고른 최적 threshold이지 양산 threshold가 아닙니다.</div></footer>
       </div>
-      <aside class="speaker-notes">이 장은 RAD 숫자의 조건을 읽는 장입니다. training-free와 reference-free를 구분하고, AUROC 외에 AP와 F1도 함께 보여줍니다. 논문은 takt time, sensor drift, false-call 비용을 검증하지 않았습니다.</aside>
+      <aside class="speaker-notes">그림은 왼쪽부터 불량 후보, 정상 reference 한 장, 모델 heatmap, 사람이 칠한 정답입니다. training-free와 reference-free를 구분하고, AUROC 외에 AP와 F1도 함께 봅니다. 논문은 takt time, sensor drift, false-call 비용을 검증하지 않았습니다.</aside>
     </section>
 
     <section class="slide theme-pearl" data-title="CoGeoAD: RGB + 3D" aria-labelledby="slide-7-title">
@@ -191,14 +194,17 @@
           <div class="paper-id-card"><span>COGEOAD</span><strong>Color × Geometry</strong><small>Cross-dataset evaluation</small></div>
         </header>
         <div class="paper-detail-grid">
-          <article class="paper-detail-card"><span class="detail-kicker">01 · TASK</span><h3>RGB + point cloud</h3><p>정합된 색상과 3D 형상으로 표면 얼룩과 crack·dent를 함께 찾습니다.</p><ul class="detail-list"><li>제품 단위 이상 점수</li><li>point / pixel 단위 위치</li><li>색 또는 형상 한쪽의 강한 신호 보존</li></ul></article>
-          <article class="paper-detail-card"><span class="detail-kicker">02 · BENCHMARK</span><h3>다른 dataset으로 이동</h3><p>한 dataset에서 새 모듈을 학습하고 다른 dataset에서 추가 적응 없이 평가합니다.</p><ul class="detail-list"><li>MVTec3D-AD · 10개 제품군</li><li>Eyecandies · 10개 제품군</li><li>source에는 불량 label·mask 사용</li><li>목표 dataset에는 재학습 없음</li></ul></article>
-          <article class="paper-detail-card"><span class="detail-kicker">03 · METHOD</span><h3>9개 각도에서 본다</h3><ol class="detail-steps"><li><b>1</b><span>20개 후보 중 9개 RGB·geometry view 생성</span></li><li><b>2</b><span>Multi-View Attention으로 중요한 각도 선택</span></li><li><b>3</b><span>여러 CLIP 층과 두 modality 결과를 max fusion</span></li></ol><div class="detail-definition">CLIP은 frozen · prompt/attention/fusion은 20 epoch 학습</div></article>
-          <article class="paper-detail-card"><span class="detail-kicker">04 · RESULT</span><h3>GS-CLIP 대비</h3><div class="detail-table"><div><span>MVTec3D I-AUROC</span><strong>83.6 → 87.4</strong></div><div><span>MVTec3D AUPRO</span><strong>86.4 → 91.9</strong></div><div class="highlight"><span>Eyecandies I-AUROC</span><strong>70.3 → 82.6</strong></div><div><span>Eyecandies AUPRO</span><strong>73.4 → 87.2</strong></div></div></article>
+          <figure class="paper-detail-card paper-figure-card">
+            <span class="detail-kicker">01 · DATA AT A GLANCE</span>
+            <div class="paper-figure-media is-paper"><img src="assets/papers/cogeo-bagel-crack.webp" alt="베이글의 균열이 RGB 색상 이미지에서는 잘 보이지 않지만 3D 형상과 여러 시점에서 드러나고 최종 heatmap에 표시되는 그림"></div>
+            <figcaption><div><strong>색에서 안 보인 균열을 3D 형상이 보완합니다.</strong><span>MVTec3D ↔ Eyecandies 교차 평가 · source 불량 label 사용</span></div><a href="https://arxiv.org/abs/2606.25273" target="_blank" rel="noopener noreferrer">CoGeoAD Fig. 1(a) ↗</a></figcaption>
+          </figure>
+          <article class="paper-detail-card"><span class="detail-kicker">02 · METHOD</span><h3>9개 각도에서 본다</h3><ol class="detail-steps"><li><b>1</b><span>20개 후보 중 9개 RGB·geometry view 생성</span></li><li><b>2</b><span>Multi-View Attention으로 중요한 각도 선택</span></li><li><b>3</b><span>여러 CLIP 층과 두 modality 결과를 max fusion</span></li></ol><div class="detail-definition">CLIP은 frozen · prompt/attention/fusion은 20 epoch 학습</div></article>
+          <article class="paper-detail-card"><span class="detail-kicker">03 · RESULT</span><h3>GS-CLIP 대비</h3><div class="detail-table"><div><span>MVTec3D I-AUROC</span><strong>83.6 → 87.4</strong></div><div><span>MVTec3D AUPRO</span><strong>86.4 → 91.9</strong></div><div class="highlight"><span>Eyecandies I-AUROC</span><strong>70.3 → 82.6</strong></div><div><span>Eyecandies AUPRO</span><strong>73.4 → 87.2</strong></div></div></article>
         </div>
         <footer class="paper-detail-footer"><div class="paper-scope"><span>TRAIN<strong>Source labels</strong></span><span>TEST<strong>Other dataset</strong></span><span>SPEED<strong>1.28 FPS</strong></span></div><div class="detail-interpretation"><strong>QUALITY READ</strong>Zero-shot은 “불량 데이터 0개”가 아니라 목표 dataset에 재학습하지 않았다는 뜻입니다. RGB–3D calibration과 1.28 FPS 처리량은 실제 line 조건에서 다시 검증해야 합니다.</div></footer>
       </div>
-      <aside class="speaker-notes">기존 70.3→82.6과 73.4→87.2는 Eyecandies에서 GS-CLIP 대비 결과입니다. source dataset의 불량 mask로 신규 모듈을 학습했으므로 완전한 unsupervised 모델로 소개하지 않습니다.</aside>
+      <aside class="speaker-notes">그림의 베이글 crack은 RGB에서는 정상처럼 보이지만 3D 형상에서는 드러납니다. 70.3→82.6과 73.4→87.2는 Eyecandies에서 GS-CLIP 대비 결과입니다. source dataset의 불량 mask로 신규 모듈을 학습했으므로 완전한 unsupervised 모델로 소개하지 않습니다.</aside>
     </section>
 
     <section class="slide theme-black" data-title="오염된 정상 데이터" aria-labelledby="slide-8-title">
@@ -228,14 +234,20 @@
           <div class="paper-id-card"><span>MeDS</span><strong>Memory-Distilled Selection</strong><small>MVTecAD · 40% noise</small></div>
         </header>
         <div class="paper-detail-grid">
-          <article class="paper-detail-card"><span class="detail-kicker">01 · TASK</span><h3>섞인 폴더에서 학습</h3><p>정상과 불량이 label 없이 섞인 이미지에서 clean subset을 골라 anomaly detector를 학습합니다.</p><ul class="detail-list"><li>정상 샘플이 과반수라는 가정</li><li>제품 종류 label은 알고 있음</li><li>이미지 점수 + pixel heatmap 출력</li></ul></article>
-          <article class="paper-detail-card"><span class="detail-kicker">02 · BENCHMARK</span><h3>오염률을 통제한다</h3><p>공개 dataset의 test 불량 이미지를 train pool에 정해진 비율로 주입했습니다.</p><ul class="detail-list"><li>MVTecAD · 10 / 20 / 40%</li><li>VisA · 2 / 5 / 10%</li><li>Real-IAD · 공식 noisy protocol</li><li>실제 미래 lot 오염은 아님</li></ul></article>
-          <article class="paper-detail-card"><span class="detail-kicker">03 · METHOD</span><h3>거칠게 찾고 정밀하게 거른다</h3><ol class="detail-steps"><li><b>1</b><span>10% random memory를 100개 만들어 평균 거리 계산</span></li><li><b>2</b><span>거친 이상 점수를 student network에 distillation</span></li><li><b>3</b><span>median + MAD로 clean subset을 매 epoch 재선택</span></li></ol><div class="detail-definition">드문 불량보다 반복되는 정상 패턴이 memory에 더 안정적으로 남는다는 가정</div></article>
-          <article class="paper-detail-card"><span class="detail-kicker">04 · RESULT</span><h3>Dinomaly + MeDS</h3><div class="detail-table"><div class="highlight"><span>I-AUROC</span><strong>87.38 → 99.16</strong></div><div><span>I-AP</span><strong>93.28 → 99.63</strong></div><div><span>P-AUPRO</span><strong>89.26 → 94.54</strong></div><div><span>P-AP</span><strong>53.00 → 68.05</strong></div></div></article>
+          <figure class="paper-detail-card paper-figure-card">
+            <span class="detail-kicker">01 · DATA AT A GLANCE</span>
+            <div class="paper-figure-media mvtec-sample-strip" role="img" aria-label="MVTec AD의 capsule과 fabric 예시를 정상, 불량, 결함 확대 순서로 나란히 보여주는 그림">
+              <i style="--tile-x: 33.333%; --tile-y: 0%"></i><i style="--tile-x: 33.333%; --tile-y: 50%"></i><i style="--tile-x: 33.333%; --tile-y: 100%"></i>
+              <i style="--tile-x: 66.667%; --tile-y: 0%"></i><i style="--tile-x: 66.667%; --tile-y: 50%"></i><i style="--tile-x: 66.667%; --tile-y: 100%"></i>
+            </div>
+            <figcaption><div><strong>정상 · 불량 · 결함 확대가 이런 이미지입니다.</strong><span>MVTecAD 오염 10 / 20 / 40% · 정상 과반 가정</span></div><a href="https://www.mvtec.com/research-teaching/datasets/mvtec-ad" target="_blank" rel="noopener noreferrer">MVTec AD ↗</a></figcaption>
+          </figure>
+          <article class="paper-detail-card"><span class="detail-kicker">02 · METHOD</span><h3>거칠게 찾고 정밀하게 거른다</h3><ol class="detail-steps"><li><b>1</b><span>10% random memory를 100개 만들어 평균 거리 계산</span></li><li><b>2</b><span>거친 이상 점수를 student network에 distillation</span></li><li><b>3</b><span>median + MAD로 clean subset을 매 epoch 재선택</span></li></ol><div class="detail-definition">드문 불량보다 반복되는 정상 패턴이 memory에 더 안정적으로 남는다는 가정</div></article>
+          <article class="paper-detail-card"><span class="detail-kicker">03 · RESULT</span><h3>Dinomaly + MeDS</h3><div class="detail-table"><div class="highlight"><span>I-AUROC</span><strong>87.38 → 99.16</strong></div><div><span>I-AP</span><strong>93.28 → 99.63</strong></div><div><span>P-AUPRO</span><strong>89.26 → 94.54</strong></div><div><span>P-AP</span><strong>53.00 → 68.05</strong></div></div></article>
         </div>
         <footer class="paper-detail-footer"><div class="paper-scope"><span>NOISE<strong>40%</strong></span><span>ASSUME<strong>정상 과반</strong></span><span>COST<strong>Memory ×100</strong></span></div><div class="detail-interpretation"><strong>QUALITY READ</strong>주입한 불량이 test set에도 남는 통제 실험입니다. 독립된 미래 lot·미지 불량 검증과는 다르며, clean data에서는 I-AUROC가 99.64→99.37로 소폭 낮아졌습니다.</div></footer>
       </div>
-      <aside class="speaker-notes">MeDS의 강점은 contamination에 강한 selection입니다. 다만 실제 자연 오염이 아니라 test anomaly를 train에 주입했고, 정상 과반수와 제품 label을 요구합니다. 100개 memory와 매 epoch inference 비용도 있습니다.</aside>
+      <aside class="speaker-notes">두 묶음 모두 정상→불량→결함 확대 순서이며, 초록 테두리가 정상이고 빨강 테두리가 불량입니다. MeDS는 이런 불량이 label 없이 train 폴더에 섞였다고 가정합니다. 실제 자연 오염이 아니라 test anomaly를 주입했고, 정상 과반수와 제품 label을 요구합니다.</aside>
     </section>
 
     <section class="slide theme-white" data-title="희귀질환 MRI" aria-labelledby="slide-9-title">
@@ -262,14 +274,17 @@
           <div class="paper-id-card"><span>DDL</span><strong>Dynamic Decision Learning</strong><small>NOVA · Qwen2.5-VL 7B</small></div>
         </header>
         <div class="paper-detail-grid">
-          <article class="paper-detail-card"><span class="detail-kicker">01 · TASK</span><h3>진단이 아니라 위치 찾기</h3><p>뇌 MRI와 지시문을 받아 이상 영역의 bounding box와 consensus 신뢰도를 출력합니다.</p><ul class="detail-list"><li>질병명 분류가 아님</li><li>엄격한 위치 지표 mAP@25/50/75</li><li>@75는 상자가 더 정확히 겹쳐야 통과</li></ul></article>
-          <article class="paper-detail-card"><span class="detail-kicker">02 · BENCHMARK</span><h3>희귀 281종</h3><p>NOVA는 희귀 병리를, BTD는 비교적 흔한 세 종류 뇌종양을 다룹니다.</p><ul class="detail-list"><li>NOVA · 개발 100장 / 평가 806장</li><li>희귀 병리 281종</li><li>BTD · 개발 100장 / 평가 293장</li><li>glioma · meningioma · pituitary</li></ul></article>
-          <article class="paper-detail-card"><span class="detail-kicker">03 · METHOD</span><h3>7번 보고 합의한다</h3><ol class="detail-steps"><li><b>1</b><span>DAPE가 개발 세트에서 더 좋은 instruction 탐색</span></li><li><b>2</b><span>회전·확대·반전한 7개 view로 반복 추론</span></li><li><b>3</b><span>상자를 원좌표로 복원·정렬해 반복 위치만 보존</span></li></ol><div class="detail-definition">Reliability = 반복 빈도 + 위치 일관성</div></article>
-          <article class="paper-detail-card"><span class="detail-kicker">04 · RESULT</span><h3>절대값과 상대값</h3><div class="detail-table"><div class="highlight"><span>7B NOVA mAP@75<br>single → DDL</span><strong>.036 → .075</strong></div><div><span>상대 개선</span><strong>+104.7%</strong></div><div><span>3B NOVA<br>SFT → DDL</span><strong>.046 → .066</strong></div><div><span>3B BTD<br>SFT → DDL</span><strong>.308 → .283</strong></div></div></article>
+          <figure class="paper-detail-card paper-figure-card">
+            <span class="detail-kicker">01 · DATA AT A GLANCE</span>
+            <div class="paper-figure-media is-photo"><img src="assets/papers/ddl-central-neurocytoma.webp" alt="같은 뇌 MRI에서 사람 정답 상자, 단일 추론 상자, DDL이 여러 시점을 종합한 상자를 비교한 그림"></div>
+            <figcaption><div><strong>같은 MRI의 위치 상자가 추론 방식마다 달라집니다.</strong><span>초록=정답 · 파랑=1회 · 주황=prompt · 노랑=DDL · NOVA 희귀 281종</span></div><a href="https://arxiv.org/abs/2604.24972" target="_blank" rel="noopener noreferrer">DDL Fig. 4 ↗</a></figcaption>
+          </figure>
+          <article class="paper-detail-card"><span class="detail-kicker">02 · METHOD</span><h3>7번 보고 합의한다</h3><ol class="detail-steps"><li><b>1</b><span>DAPE가 개발 세트에서 더 좋은 instruction 탐색</span></li><li><b>2</b><span>회전·확대·반전한 7개 view로 반복 추론</span></li><li><b>3</b><span>상자를 원좌표로 복원·정렬해 반복 위치만 보존</span></li></ol><div class="detail-definition">Reliability = 반복 빈도 + 위치 일관성</div></article>
+          <article class="paper-detail-card"><span class="detail-kicker">03 · RESULT</span><h3>절대값과 상대값</h3><div class="detail-table"><div class="highlight"><span>7B NOVA mAP@75<br>single → DDL</span><strong>.036 → .075</strong></div><div><span>상대 개선</span><strong>+104.7%</strong></div><div><span>3B NOVA<br>SFT → DDL</span><strong>.046 → .066</strong></div><div><span>3B BTD<br>SFT → DDL</span><strong>.308 → .283</strong></div></div></article>
         </div>
         <footer class="paper-detail-footer"><div class="paper-scope"><span>DEV LABEL<strong>100장</strong></span><span>VIEWS<strong>7회 추론</strong></span><span>OUTPUT<strong>Boxes</strong></span></div><div class="detail-interpretation"><strong>QUALITY READ</strong>희귀·OOD 상황의 추론 안정성은 좋아졌지만 모든 dataset에서 SFT보다 높지는 않습니다. 인간 방사선과 의사 비교도 없고, 7회 추론만큼 계산 비용이 늘어납니다.</div></footer>
       </div>
-      <aside class="speaker-notes">105%라는 상대 수치와 0.036→0.075라는 절대 수치를 같은 화면에 둡니다. DDL은 frozen model이지만 prompt 탐색에 label이 있는 개발 세트 100장을 사용합니다.</aside>
+      <aside class="speaker-notes">MRI 세 장의 초록 상자는 사람 정답이고 파랑·주황·노랑은 추론 방식별 예측입니다. 같은 영상인데도 상자가 달라지는 점을 먼저 보여준 뒤, 105%라는 상대 수치와 0.036→0.075라는 절대 수치를 함께 읽습니다. prompt 탐색에는 label이 있는 개발 세트 100장을 사용합니다.</aside>
     </section>
 
     <section class="slide theme-black" data-title="전문 소형 모델" aria-labelledby="slide-10-title">
@@ -299,14 +314,21 @@
           <div class="paper-id-card"><span>MechVQA</span><strong>Mechanical Drawing QA</strong><small>Table 1 · Table 2</small></div>
         </header>
         <div class="paper-detail-grid">
-          <article class="paper-detail-card"><span class="detail-kicker">01 · TASK</span><h3>도면을 읽고 근거를 댄다</h3><p>기계 도면 한 장과 질문을 받아 근거 설명과 짧은 정답을 출력합니다.</p><ul class="detail-list"><li>Recognition · 치수·기호·표</li><li>Reasoning · 구조·계산·조립</li><li>Judging · 이상·일관성·규칙</li><li>총 10개 세부 task</li></ul></article>
-          <article class="paper-detail-card"><span class="detail-kicker">02 · DATASET</span><h3>유사 도면도 분리</h3><p>같은 도면 또는 거의 같은 도면이 train과 test에 섞이지 않도록 drawing 단위로 나눴습니다.</p><ul class="detail-list"><li>도면 3,281장</li><li>질문–답변 20,778개</li><li>train / val / test = 8 : 1 : 1</li><li>similarity-cluster split</li></ul></article>
-          <article class="paper-detail-card"><span class="detail-kicker">03 · METHOD</span><h3>4B 전공 모델 만들기</h3><ol class="detail-steps"><li><b>1</b><span>Qwen3-VL-4B에 정답과 해설을 SFT</span></li><li><b>2</b><span>정확성·형식·설명 품질 reward로 DAPO RL</span></li><li><b>3</b><span>취약 subtask 비중을 높여 재학습</span></li></ol><div class="detail-definition">SFT 76.36 → RL 84.85 · +8.49점</div></article>
-          <article class="paper-detail-card"><span class="detail-kicker">04 · RESULT</span><h3>같은 전문 시험에서</h3><div class="detail-table"><div><span>GPT-5</span><strong>75.44</strong></div><div><span>Gemini 3 Pro Preview</span><strong>77.28</strong></div><div><span>GLM-4.6V</span><strong>78.91</strong></div><div class="highlight"><span>MechVL-4B-RL</span><strong>84.85</strong></div></div></article>
+          <figure class="paper-detail-card paper-figure-card">
+            <span class="detail-kicker">01 · DATA AT A GLANCE</span>
+            <div class="paper-figure-media mechvqa-sample-strip">
+              <img src="assets/papers/mechvqa-recognition.webp" alt="도면의 중앙 구멍 직경을 묻고 Φ72 mm라고 답하는 recognition 예시">
+              <img src="assets/papers/mechvqa-reasoning.webp" alt="물결 홈의 전체 폭을 계산해 26.5 mm라고 답하는 reasoning 예시">
+              <img src="assets/papers/mechvqa-judging.webp" alt="스프링 도면에서 누락된 치수가 wire diameter라고 답하는 judging 예시">
+            </div>
+            <figcaption><div><strong>도면 한 장에서 읽기 · 계산 · 오류 판단을 묻습니다.</strong><span>도면 3,281장 · QA 20,778개 · 유사 도면은 같은 split으로 묶음</span></div><a href="https://arxiv.org/abs/2605.30794" target="_blank" rel="noopener noreferrer">MechVQA Fig. 1(b) ↗</a></figcaption>
+          </figure>
+          <article class="paper-detail-card"><span class="detail-kicker">02 · METHOD</span><h3>4B 전공 모델 만들기</h3><ol class="detail-steps"><li><b>1</b><span>Qwen3-VL-4B에 정답과 해설을 SFT</span></li><li><b>2</b><span>정확성·형식·설명 품질 reward로 DAPO RL</span></li><li><b>3</b><span>취약 subtask 비중을 높여 재학습</span></li></ol><div class="detail-definition">SFT 76.36 → RL 84.85 · +8.49점</div></article>
+          <article class="paper-detail-card"><span class="detail-kicker">03 · RESULT</span><h3>같은 전문 시험에서</h3><div class="detail-table"><div><span>GPT-5</span><strong>75.44</strong></div><div><span>Gemini 3 Pro Preview</span><strong>77.28</strong></div><div><span>GLM-4.6V</span><strong>78.91</strong></div><div class="highlight"><span>MechVL-4B-RL</span><strong>84.85</strong></div></div></article>
         </div>
         <footer class="paper-detail-footer"><div class="paper-scope"><span>DRAWINGS<strong>3,281</strong></span><span>QA<strong>20,778</strong></span><span>MODEL<strong>4B</strong></span></div><div class="detail-interpretation"><strong>QUALITY READ</strong>사내 양산 도면이 아니라 공개 교재·핸드북·설계 플랫폼의 정리된 도면입니다. 인간 전문가 upper bound가 없어 84.85를 엔지니어보다 높은 점수로 해석할 수 없습니다.</div></footer>
       </div>
-      <aside class="speaker-notes">전문 데이터가 큰 범용 모델을 이긴 사례로 설명하되 인간과의 승부로 확대하지 않습니다. 저화질·불완전 도면은 수집 단계에서 제거됐고 일부 metadata는 전문가 수정이 많이 필요했습니다.</aside>
+      <aside class="speaker-notes">세 예시는 도면에서 값을 읽는 문제, 치수 사슬을 계산하는 문제, 빠진 치수를 판단하는 문제입니다. 전문 데이터가 큰 범용 모델을 이긴 사례로 설명하되 인간과의 승부로 확대하지 않습니다. 저화질·불완전 도면은 수집 단계에서 제거됐습니다.</aside>
     </section>
 
     <section class="slide theme-pearl" data-title="IC footprint 초안" aria-labelledby="slide-11-title">
@@ -334,14 +356,17 @@
           <div class="paper-id-card"><span>LMM4-IC4K</span><strong>Datasheet → Geometry</strong><small>Final ICML version</small></div>
         </header>
         <div class="paper-detail-grid">
-          <article class="paper-detail-card"><span class="detail-kicker">01 · TASK</span><h3>그림을 EDA 좌표로</h3><p>Footprint diagram에서 PCB layout을 재구성할 세 가지 구조 정보를 냅니다.</p><ul class="detail-list"><li>전체 pin 개수</li><li>중심 원점의 pin (x, y)</li><li>각 pin 폭·높이 또는 직경</li><li>최종 footprint layout 재구성</li></ul></article>
-          <article class="paper-detail-card"><span class="detail-kicker">02 · DATASET</span><h3>실제 + synthetic</h3><p>10개 package type과 1–800개 pin 범위를 섞고, 학습에서 제외한 실제 IC로 평가했습니다.</p><ul class="detail-list"><li>실제 datasheet 4,138개</li><li>synthetic diagram 4,470개</li><li>ICGeo8K 총 8,608개</li><li>ICGEOQA test 400개</li></ul></article>
-          <article class="paper-detail-card"><span class="detail-kicker">03 · METHOD</span><h3>깨끗한 것부터 현실로</h3><ol class="detail-steps"><li><b>1</b><span>Synthetic diagram으로 기본 geometry 학습</span></li><li><b>2</b><span>실제 datasheet의 글꼴·단위·배치·노이즈에 적응</span></li><li><b>3</b><span>pin 수 → 좌표 → 치수 순서로 구조화 출력</span></li></ol><div class="detail-definition">Synthetic only 42.9% → real data 추가 71.6%</div></article>
-          <article class="paper-detail-card"><span class="detail-kicker">04 · RESULT</span><h3>전체 layout IoU</h3><div class="detail-table"><div><span>GPT-5 · 1-shot</span><strong>40.6%</strong></div><div><span>GPT-5 · 4-shot</span><strong>43.0%</strong></div><div><span>산업 EDA library</span><strong>44.0%</strong></div><div class="highlight"><span>LMM4-IC4K</span><strong>71.6%</strong></div></div></article>
+          <figure class="paper-detail-card paper-figure-card">
+            <span class="detail-kicker">01 · DATA AT A GLANCE</span>
+            <div class="paper-figure-media is-paper"><img src="assets/papers/lmm4-figure-2.webp" alt="IC datasheet의 footprint 도면을 입력으로 받아 범용 GPT와 전문 LMM4 모델이 재구성한 pin layout을 정답과 비교한 그림"></div>
+            <figcaption><div><strong>Datasheet 그림을 pin 좌표와 크기로 바꿉니다.</strong><span>실제 4,138 + synthetic 4,470 · 학습에서 뺀 실제 IC 400개 평가</span></div><a href="https://openreview.net/pdf/b7d42c30c5824502ca0378034b3cd6854dceb6a4.pdf" target="_blank" rel="noopener noreferrer">LMM4-IC4K Fig. 2 ↗</a></figcaption>
+          </figure>
+          <article class="paper-detail-card"><span class="detail-kicker">02 · METHOD</span><h3>깨끗한 것부터 현실로</h3><ol class="detail-steps"><li><b>1</b><span>Synthetic diagram으로 기본 geometry 학습</span></li><li><b>2</b><span>실제 datasheet의 글꼴·단위·배치·노이즈에 적응</span></li><li><b>3</b><span>pin 수 → 좌표 → 치수 순서로 구조화 출력</span></li></ol><div class="detail-definition">Synthetic only 42.9% → real data 추가 71.6%</div></article>
+          <article class="paper-detail-card"><span class="detail-kicker">03 · RESULT</span><h3>전체 layout IoU</h3><div class="detail-table"><div><span>GPT-5 · 1-shot</span><strong>40.6%</strong></div><div><span>GPT-5 · 4-shot</span><strong>43.0%</strong></div><div><span>산업 EDA library</span><strong>44.0%</strong></div><div class="highlight"><span>LMM4-IC4K</span><strong>71.6%</strong></div></div></article>
         </div>
         <footer class="paper-detail-footer"><div class="paper-scope"><span>PIN MAE<strong>0.35개</strong></span><span>POSITION<strong>1.11 mm</strong></span><span>TIME<strong>약 15초</strong></span></div><div class="detail-interpretation"><strong>QUALITY READ</strong>엔지니어 평균 약 7분보다 빠르지만 인간 정확도 비교는 아닙니다. 폭·높이 뒤바꿈, 원형 pin 오인식, 비대칭 배열 실패가 있어 DRC와 엔지니어 승인이 필요합니다.</div></footer>
       </div>
-      <aside class="speaker-notes">구버전 preprint의 Altium 95/EAGLE 80/KiCad 83 수치는 제거했습니다. 최종 ICML판은 GPT-5, 산업 EDA library와 layout IoU를 비교합니다. 71.6은 평균 겹침이지 제조 합격률이 아닙니다.</aside>
+      <aside class="speaker-notes">그림의 왼쪽은 datasheet 입력, 가운데는 pin 수와 좌표가 어긋난 범용 모델, 오른쪽은 전문 모델 결과입니다. 최종 ICML판은 GPT-5, 산업 EDA library와 layout IoU를 비교하며, 71.6은 평균 겹침이지 제조 합격률이 아닙니다.</aside>
     </section>
 
     <section class="slide theme-black" data-title="AI의 자기 신뢰도" aria-labelledby="slide-12-title">
@@ -370,14 +395,23 @@
           <div class="paper-id-card"><span>SciPredict</span><strong>Scientific Outcome Forecasting</strong><small>405 tasks · 33 fields</small></div>
         </header>
         <div class="paper-detail-grid">
-          <article class="paper-detail-card"><span class="detail-kicker">01 · TASK</span><h3>결과를 가리고 예측</h3><p>실험 setup과 측정 항목만 보고 아직 공개되지 않았다고 가정한 결과를 맞힙니다.</p><ul class="detail-list"><li>MCQ · 수치 범위 · 자유서술</li><li>Confidence / difficulty / feasibility 1–5</li><li>실제 논문 결과가 ground truth</li><li>선택적 전문가 background 제공</li></ul></article>
-          <article class="paper-detail-card"><span class="detail-kicker">02 · BENCHMARK</span><h3>최신 자연과학 405문제</h3><p>2025년 3월 31일 이후 실험 논문에서 전문가가 문제와 rubric을 만들었습니다.</p><ul class="detail-list"><li>Biology 50% · Physics 25% · Chemistry 25%</li><li>33개 세부 분야</li><li>MCQ 40% · 자유서술 32% · 수치 28%</li><li>15개 LLM · zero-shot · web search 없음</li></ul></article>
-          <article class="paper-detail-card"><span class="detail-kicker">03 · EVALUATION</span><h3>정확도와 자기 판단을 분리</h3><ol class="detail-steps"><li><b>1</b><span>전문가가 정답·수치 허용범위·free-form rubric 작성</span></li><li><b>2</b><span>두 차례 QA 후 LLM과 분야 전문가에게 같은 질문</span></li><li><b>3</b><span>답의 정확도와 “실험 없이 알 수 있는가”를 함께 평가</span></li></ol><div class="detail-definition">Free-form 일부는 LLM judge 사용 · GPT-5.2 judge로 재검증</div></article>
-          <article class="paper-detail-card"><span class="detail-kicker">04 · RESULT</span><h3>배경지식 없음 · 평균</h3><div class="detail-table"><div class="highlight"><span>Gemini 3 Pro</span><strong>25.27%</strong></div><div><span>Claude Opus 4.5</span><strong>23.05%</strong></div><div><span>GPT-5.2</span><strong>20.58%</strong></div><div><span>분야 전문가</span><strong>20.25%</strong></div></div></article>
+          <figure class="paper-detail-card paper-figure-card">
+            <span class="detail-kicker">01 · ONE REAL BENCHMARK ITEM</span>
+            <div class="paper-figure-media scipredict-sample" role="img" aria-label="실험 조건 737 나노미터, 4.3 dBm, 16분을 바탕으로 TFLN의 DC bias drift를 예측하고 실제 정답 범위 7.2에서 8.8 dB와 비교하는 SciPredict 실제 문제">
+              <div class="science-panel setup"><span>EXPERIMENT SETUP</span><strong>TFLT vs TFLN</strong><small>737 nm · 4.3 dBm · 16분</small></div>
+              <i aria-hidden="true">→</i>
+              <div class="science-panel hidden"><span>RESULT HIDDEN</span><strong>DC bias drift = ?</strong><small>예측값 · 자신감 · 가능성</small></div>
+              <i aria-hidden="true">→</i>
+              <div class="science-panel ground-truth"><span>GROUND TRUTH</span><strong>7.2–8.8 dB</strong><small>실제 논문 결과</small></div>
+            </div>
+            <figcaption><div><strong>실제 실험도 모델 앞에서는 정리된 한 문제입니다.</strong><span>405문제 · 33개 분야 · raw 파형·장비 drift·missing은 이미 요약 뒤에 숨음</span></div><a href="https://arxiv.org/pdf/2604.10718#page=24" target="_blank" rel="noopener noreferrer">SciPredict sample ↗</a></figcaption>
+          </figure>
+          <article class="paper-detail-card"><span class="detail-kicker">02 · EVALUATION</span><h3>정확도와 자기 판단을 분리</h3><ol class="detail-steps"><li><b>1</b><span>전문가가 정답·수치 허용범위·free-form rubric 작성</span></li><li><b>2</b><span>두 차례 QA 후 LLM과 분야 전문가에게 같은 질문</span></li><li><b>3</b><span>답의 정확도와 “실험 없이 알 수 있는가”를 함께 평가</span></li></ol><div class="detail-definition">Free-form 일부는 LLM judge 사용 · GPT-5.2 judge로 재검증</div></article>
+          <article class="paper-detail-card"><span class="detail-kicker">03 · RESULT</span><h3>배경지식 없음 · 평균</h3><div class="detail-table"><div class="highlight"><span>Gemini 3 Pro</span><strong>25.27%</strong></div><div><span>Claude Opus 4.5</span><strong>23.05%</strong></div><div><span>GPT-5.2</span><strong>20.58%</strong></div><div><span>분야 전문가</span><strong>20.25%</strong></div></div></article>
         </div>
         <footer class="paper-detail-footer"><div class="paper-scope"><span>HUMAN F=1<strong>3.08%</strong></span><span>HUMAN F=5<strong>75.51%</strong></span><span>AI CURVE<strong>≈20%</strong></span></div><div class="detail-interpretation"><strong>QUALITY READ</strong>인간 20%는 ceiling이 아니라 calibration reference입니다. AI 평균 hit rate는 일부 인간 평균을 넘었지만 high-confidence 문제를 골라내지 못했습니다. 공학 분야와 실제 실험 수행 능력은 평가 밖입니다.</div></footer>
       </div>
-      <aside class="speaker-notes">이 장의 핵심은 25 대 20의 승부가 아니라 calibration입니다. 인간은 feasibility가 높다고 판단한 문제에서 3.08→75.51%로 정확도가 올라가지만 AI는 대체로 약 20%에 머뭅니다.</aside>
+      <aside class="speaker-notes">왼쪽은 실제 benchmark 한 건을 줄인 모습입니다. 실험은 현실에서 수행됐지만 모델은 raw 파형이 아니라 전문가가 정리한 조건과 질문을 받습니다. 핵심은 25 대 20의 승부가 아니라 calibration이며, 인간은 feasibility가 높다고 본 문제에서 정확도가 3.08→75.51%로 올라갑니다.</aside>
     </section>
 
     <section class="slide theme-pearl" data-title="숫자의 함정" aria-labelledby="slide-13-title">

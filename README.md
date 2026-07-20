@@ -48,6 +48,7 @@ python3 -m http.server 4173
 - `styles.css`: Apple-inspired 시각 시스템, 반응형·인쇄 스타일
 - `slides.js`: 키보드·터치 이동, 전체 보기, 노트, 전체 화면
 - `assets/PretendardVariable.woff2`: 발표 PC와 무관하게 한글을 표시하는 로컬 웹폰트
+- `assets/papers/`: 논문·dataset 대표 이미지와 [출처·라이선스 기록](assets/papers/ATTRIBUTION.md)
 
 ## 내용 해석 시 주의
 
