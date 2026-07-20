@@ -122,13 +122,13 @@
         <div class="trend-grid">
           <article class="trend-card"><span class="trend-index">01</span><div class="trend-icon icon-one" aria-hidden="true"></div><h3>Few / Zero-shot</h3><p>불량 표본이 거의 없어도 찾기</p></article>
           <article class="trend-card"><span class="trend-index">02</span><div class="trend-icon icon-layers" aria-hidden="true"></div><h3>Multimodal</h3><p>RGB · 3D · 도면 · 센서 함께 보기</p></article>
-          <article class="trend-card"><span class="trend-index">03</span><div class="trend-icon icon-loop" aria-hidden="true"></div><h3>Tool-grounded Agent</h3><p>시뮬레이터 결과로 스스로 수정하기</p></article>
-          <article class="trend-card"><span class="trend-index">04</span><div class="trend-icon icon-wave" aria-hidden="true"></div><h3>Physical Surrogate</h3><p>비싼 실험 전에 후보 선별하기</p></article>
+          <article class="trend-card"><span class="trend-index">03</span><div class="trend-icon icon-loop" aria-hidden="true"></div><h3>Robust Learning</h3><p>오염 데이터에도 성능 지키기</p></article>
+          <article class="trend-card"><span class="trend-index">04</span><div class="trend-icon icon-wave" aria-hidden="true"></div><h3>Domain Specialist</h3><p>전문 데이터로 특정 문제 잘 풀기</p></article>
           <article class="trend-card"><span class="trend-index">05</span><div class="trend-icon icon-shield" aria-hidden="true"></div><h3>Reliability</h3><p>언제 믿고 언제 거부할지 측정하기</p></article>
         </div>
         <p class="method-note">품질 조직에 설명하기 좋은 ICML 2026 응용 논문을 중심으로 선별한 흐름이며, 학회 전체 분야의 정량 분류는 아닙니다.</p>
       </div>
-      <aside class="speaker-notes">이후 사례들을 다섯 키워드에 매핑합니다. ‘거대 모델 경쟁’보다 데이터 부족, 물리 정보, 도구 피드백, 신뢰성이 품질팀과 맞닿아 있다는 점을 강조합니다.</aside>
+      <aside class="speaker-notes">이후 사례들을 다섯 키워드에 매핑합니다. ‘거대 모델 경쟁’보다 데이터 부족, 멀티모달, 오염 견고성, 전문화, 신뢰성이 품질팀과 맞닿아 있다는 점을 강조합니다.</aside>
     </section>
 
     <section class="slide theme-black" data-title="RAD: 정상 한 장" aria-labelledby="slide-6-title">
@@ -344,84 +344,12 @@
       <aside class="speaker-notes">구버전 preprint의 Altium 95/EAGLE 80/KiCad 83 수치는 제거했습니다. 최종 ICML판은 GPT-5, 산업 EDA library와 layout IoU를 비교합니다. 71.6은 평균 겹침이지 제조 합격률이 아닙니다.</aside>
     </section>
 
-    <section class="slide theme-black" data-title="검증 도구를 쓰는 AI" aria-labelledby="slide-12-title">
-      <div class="slide-inner agent-layout">
-        <div class="agent-copy">
-          <p class="eyebrow">CASE 07 · TOOL-GROUNDED AGENT</p>
-          <h2 id="slide-12-title" class="structured-title"><span class="headline-line">AI도 이제</span> <span class="headline-line title-unit"><span class="text-blue">검증 도구를 씁니다.</span></span></h2>
-          <p class="lead-on-dark"><span class="semantic-phrase">Testbench를 만들고 coverage를 확인해</span> <span class="semantic-phrase">부족한 곳을 다시 고칩니다.</span></p>
-          <div class="agent-metrics"><div><strong>4B</strong><span>specialist model</span></div><div><strong>69.2%</strong><span>coverage pass</span></div><div><strong>90.4%</strong><span>average coverage</span></div></div>
-        </div>
-        <div class="agent-loop" aria-label="AI와 시뮬레이터의 반복 검증 흐름">
-          <div class="loop-node code-node"><span>01</span><strong>GENERATE</strong><small>testbench.sv</small><pre>repeat (32) begin&#10;  drive_random();&#10;end</pre></div>
-          <div class="loop-arrow a1">→</div>
-          <div class="loop-node sim-node"><span>02</span><strong>SIMULATE</strong><small>compile · run · log</small><div class="pulse-lines"><i></i><i></i><i></i><i></i></div></div>
-          <div class="loop-arrow a2">→</div>
-          <div class="loop-node coverage-node"><span>03</span><strong>COVERAGE</strong><small>branch · signal</small><div class="coverage-ring"><b>90.4</b></div></div>
-          <svg class="return-arrow" viewBox="0 0 580 160" aria-hidden="true"><path d="M500 42C500 130 80 130 80 44" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 8"></path><path d="m72 50 8-14 8 14" fill="none" stroke="currentColor" stroke-width="2"></path></svg>
-        </div>
-        <div class="reality-check on-dark"><span>REALITY CHECK</span>Coverage가 높아도 실제 bug 발견·assertion 품질이 보장되지는 않습니다. <a href="https://arxiv.org/abs/2602.16953" target="_blank" rel="noopener noreferrer">LLM4Cov ↗</a></div>
-      </div>
-      <aside class="speaker-notes">이 연구는 coverage maximizing에만 초점을 둡니다. 품질 관점에서는 coverage와 defect detection effectiveness를 분리해 설명하는 것이 중요합니다.</aside>
-    </section>
-
-    <section class="slide theme-pearl paper-detail-slide" data-title="LLM4Cov 상세: coverage의 범위" aria-labelledby="llm4cov-detail-title">
-      <div class="slide-inner paper-detail-layout">
-        <header class="paper-detail-heading">
-          <div><p class="eyebrow dark">CASE 07 · PAPER DETAIL</p><h2 id="llm4cov-detail-title"><span class="headline-line title-unit">Coverage를 올렸지만,</span> <span class="headline-line text-blue">bug를 잡았다고 말하진 않았습니다.</span></h2></div>
-          <div class="paper-id-card"><span>LLM4Cov</span><strong>Simulator-grounded Agent</strong><small>CVDP-ECov · Table 2</small></div>
-        </header>
-        <div class="paper-detail-grid">
-          <article class="paper-detail-card"><span class="detail-kicker">01 · TASK</span><h3>Repository 전체를 본다</h3><p>RTL·spec·현재 testbench와 simulator 결과를 받아 새로운 전체 SystemVerilog testbench를 냅니다.</p><ul class="detail-list"><li>patch가 아니라 전체 파일 출력</li><li>state · coverage · log 피드백</li><li>최대 3 round 재작성</li></ul></article>
-          <article class="paper-detail-card"><span class="detail-kicker">02 · BENCHMARK</span><h3>두 개의 검증 시험</h3><p>Coverage threshold를 넘는 repository 비율과 실패를 0으로 포함한 평균 coverage를 봅니다.</p><ul class="detail-list"><li>CVDP-ECov · 83 repositories</li><li>AutoEval-ECov · 156 tasks</li><li>5 samples로 Pass@1</li><li>Cadence Xcelium · IMC</li></ul></article>
-          <article class="paper-detail-card"><span class="detail-kicker">03 · METHOD</span><h3>실패를 학습 재료로</h3><ol class="detail-steps"><li><b>1</b><span>최신 simulator 상태만 남겨 긴 history 축약</span></li><li><b>2</b><span>coverage가 낮거나 실패한 state를 우선 수정</span></li><li><b>3</b><span>teacher → correction → self-correction 3단계 SFT</span></li></ol><div class="detail-definition">Coverage를 실제 개선한 correction만 학습 데이터로 보존</div></article>
-          <article class="paper-detail-card"><span class="detail-kicker">04 · RESULT</span><h3>CVDP agentic</h3><div class="detail-table"><div><span>Qwen3-4B base</span><strong>28.4 / 48.5</strong></div><div><span>30B teacher</span><strong>63.9 / 79.9</strong></div><div class="highlight"><span>LLM4Cov-4B</span><strong>69.2 / 90.4</strong></div><div><span>Qwen3-235B Pass</span><strong>69.9</strong></div></div><div class="detail-definition">표기: Pass Rate % / Avg Coverage %</div></article>
-        </div>
-        <footer class="paper-detail-footer"><div class="paper-scope"><span>ROUNDS<strong>최대 3</strong></span><span>SAMPLES<strong>5개</strong></span><span>MODEL<strong>4B</strong></span></div><div class="detail-interpretation"><strong>QUALITY READ</strong>평가 목표는 stimulus coverage입니다. Assertion 품질, 실제 bug 발견률, design correctness, verification engineer 대비 생산성은 이 논문이 측정하지 않았습니다.</div></footer>
-      </div>
-      <aside class="speaker-notes">Pass Rate와 Avg Coverage를 함께 읽습니다. LLM4Cov가 30B teacher보다 높지만 CVDP Pass Rate만 보면 Qwen3-235B의 69.9가 69.2보다 약간 높아 ‘모든 모델을 이긴 SOTA’라고 표현하지 않습니다.</aside>
-    </section>
-
-    <section class="slide theme-white" data-title="FusionCell surrogate" aria-labelledby="slide-13-title">
-      <div class="slide-inner surrogate-layout">
-        <div class="surrogate-copy">
-          <p class="eyebrow dark">CASE 08 · PHYSICAL SURROGATE</p>
-          <h2 id="slide-13-title" class="preserve-lines mobile-compact-title"><span class="headline-line">비싼 시뮬레이션은</span> <span class="headline-line">없애기보다 <span class="text-blue">줄입니다.</span></span></h2>
-          <p class="case-lead dark-lead">Layout과 netlist를 함께 보고 delay·transition·power 후보를 고릅니다.</p>
-        </div>
-        <div class="surrogate-flow" aria-label="Layout과 netlist로 성능을 예측하는 흐름">
-          <div class="input-stack"><div class="layout-map"><span>LAYOUT</span><i></i><i></i><i></i><i></i><i></i></div><div class="netlist-graph"><span>NETLIST</span><i class="node n1"></i><i class="node n2"></i><i class="node n3"></i><i class="node n4"></i><b class="edge e1"></b><b class="edge e2"></b><b class="edge e3"></b></div></div>
-          <div class="fusion-box">TOPOLOGY-GUIDED<br><strong>FUSION</strong></div>
-          <div class="prediction-stack"><div><strong>0.92%</strong><span>average MAPE</span></div><div><strong>67 sec</strong><span>19.5k cells</span></div><div class="sim-time"><strong>5 days+</strong><span>golden data generation</span></div></div>
-        </div>
-        <div class="reality-check"><span>REALITY CHECK</span>공개 7nm PDK와 알려진 셀 타입 결과입니다. 첨단 proprietary node의 최종 sign-off를 대체하지 않습니다. <a href="https://arxiv.org/abs/2605.20287" target="_blank" rel="noopener noreferrer">FusionCell ↗</a></div>
-      </div>
-      <aside class="speaker-notes">AI surrogate의 좋은 사용 방식은 predicted Pareto frontier를 빠르게 만들고 최종 후보만 정밀 시뮬레이션하는 것입니다. 67초와 5일은 논문이 보고한 전체 dataset inference와 label generation 시간입니다.</aside>
-    </section>
-
-    <section class="slide theme-black paper-detail-slide" data-title="FusionCell 상세: 0.92%의 범위" aria-labelledby="fusion-detail-title">
-      <div class="slide-inner paper-detail-layout">
-        <header class="paper-detail-heading">
-          <div><p class="eyebrow">CASE 08 · PAPER DETAIL</p><h2 id="fusion-detail-title" class="preserve-lines"><span class="headline-line">새 cell family는 시험하지 않았습니다.</span> <span class="headline-line"><span class="text-blue">0.92%는 알려진 variant</span>의 결과입니다.</span></h2></div>
-          <div class="paper-id-card"><span>FUSIONCELL</span><strong>Layout × Netlist Surrogate</strong><small>ASAP7 · Table 2</small></div>
-        </header>
-        <div class="paper-detail-grid">
-          <article class="paper-detail-card"><span class="detail-kicker">01 · TASK</span><h3>두 표현, 여섯 값</h3><p>Routed layout과 netlist graph를 함께 받아 timing과 power를 동시에 회귀합니다.</p><ul class="detail-list"><li>M0/M1/M2 3-channel layout</li><li>device·net heterogeneous graph</li><li>rise/fall delay · transition · power</li><li>총 6개 characterization 값</li></ul></article>
-          <article class="paper-detail-card"><span class="detail-kicker">02 · DATASET</span><h3>Open 7nm PDK</h3><p>Commercial extraction과 circuit simulation 결과를 golden label로 사용합니다.</p><ul class="detail-list"><li>ASAP7 FinFET PDK</li><li>149개 cell type</li><li>19,545+ layout variants</li><li>cell별 variant를 9 : 1 random split</li></ul></article>
-          <article class="paper-detail-card"><span class="detail-kicker">03 · METHOD</span><h3>Netlist가 layout을 찾는다</h3><ol class="detail-steps"><li><b>1</b><span>Layout은 DeiT, netlist는 graph transformer로 encoding</span></li><li><b>2</b><span>Graph node가 query가 되어 관련 layout patch 선택</span></li><li><b>3</b><span>Fused representation으로 6개 값을 동시 회귀</span></li></ol><div class="detail-definition">비대칭 cross-attention: topology가 geometry를 탐색</div></article>
-          <article class="paper-detail-card"><span class="detail-kicker">04 · RESULT</span><h3>평균 MAPE / R²</h3><div class="detail-table"><div><span>Vision-only</span><strong>3.16 / .947</strong></div><div><span>Late Fusion</span><strong>2.33 / .969</strong></div><div><span>Symmetrical Fusion</span><strong>2.19 / .970</strong></div><div class="highlight"><span>FusionCell</span><strong>0.92 / .977</strong></div></div></article>
-        </div>
-        <footer class="paper-detail-footer"><div class="paper-scope"><span>RANKING<strong>ρ .86 / τ .76</strong></span><span>INFERENCE<strong>약 67초</strong></span><span>LABELS<strong>5일+</strong></span></div><div class="detail-interpretation"><strong>QUALITY READ</strong>새 cell family가 아니라 알려진 type의 새 variant 평가입니다. 단일 open PDK·simulation label이며 proprietary node, multi-corner PVT, 실측 silicon sign-off는 검증하지 않았습니다.</div></footer>
-      </div>
-      <aside class="speaker-notes">0.92% MAPE는 강한 결과지만 split이 cell family extrapolation은 아닙니다. 이 모델은 area, yield, variation, reliability나 제조 불량을 예측하지 않습니다. 후보 선별 surrogate로 설명합니다.</aside>
-    </section>
-
-    <section class="slide theme-black" data-title="AI의 자기 신뢰도" aria-labelledby="slide-14-title">
+    <section class="slide theme-black" data-title="AI의 자기 신뢰도" aria-labelledby="slide-12-title">
       <div class="ambient ambient-blue-right" aria-hidden="true"></div>
       <div class="slide-inner calibration-layout">
         <div class="calibration-copy">
-          <p class="eyebrow">CASE 09 · CALIBRATION</p>
-          <h2 id="slide-14-title" class="structured-title calibration-title preserve-lines"><span class="headline-line">평균 점수는 앞섰지만,</span> <span class="headline-line"><span class="text-blue">자신의 한계는 몰랐습니다.</span></span></h2>
+          <p class="eyebrow">CASE 07 · CALIBRATION</p>
+          <h2 id="slide-12-title" class="structured-title calibration-title preserve-lines"><span class="headline-line">평균 점수는 앞섰지만,</span> <span class="headline-line"><span class="text-blue">자신의 한계는 몰랐습니다.</span></span></h2>
           <p class="lead-on-dark"><span class="semantic-phrase">405개의 실제 자연과학 실험 결과를 예측하고,</span> <span class="semantic-phrase">자신의 답을 믿을 수 있는지도 물었습니다.</span></p>
           <div class="calibration-stats"><div><strong>14–26%</strong><span>AI accuracy</span></div><div><strong>≈20%</strong><span>human average</span></div></div>
         </div>
@@ -438,7 +366,7 @@
     <section class="slide theme-white paper-detail-slide" data-title="SciPredict 상세: 평균과 calibration" aria-labelledby="scipredict-detail-title">
       <div class="slide-inner paper-detail-layout">
         <header class="paper-detail-heading">
-          <div><p class="eyebrow dark">CASE 09 · PAPER DETAIL</p><h2 id="scipredict-detail-title" class="preserve-lines"><span class="headline-line">평균 점수는 AI가 앞섰지만,</span> <span class="headline-line text-blue">신뢰도 판단은 뒤졌습니다.</span></h2></div>
+          <div><p class="eyebrow dark">CASE 07 · PAPER DETAIL</p><h2 id="scipredict-detail-title" class="preserve-lines"><span class="headline-line">평균 점수는 AI가 앞섰지만,</span> <span class="headline-line text-blue">신뢰도 판단은 뒤졌습니다.</span></h2></div>
           <div class="paper-id-card"><span>SciPredict</span><strong>Scientific Outcome Forecasting</strong><small>405 tasks · 33 fields</small></div>
         </header>
         <div class="paper-detail-grid">
@@ -452,11 +380,11 @@
       <aside class="speaker-notes">이 장의 핵심은 25 대 20의 승부가 아니라 calibration입니다. 인간은 feasibility가 높다고 판단한 문제에서 3.08→75.51%로 정확도가 올라가지만 AI는 대체로 약 20%에 머뭅니다.</aside>
     </section>
 
-    <section class="slide theme-pearl" data-title="숫자의 함정" aria-labelledby="slide-15-title">
+    <section class="slide theme-pearl" data-title="숫자의 함정" aria-labelledby="slide-13-title">
       <div class="slide-inner metric-trap-layout">
         <div class="metric-trap-copy">
           <p class="eyebrow dark">THE METRIC TRAP</p>
-          <h2 id="slide-15-title" class="single-line-title"><span class="headline-line"><span class="text-blue">98.9%</span> ≠ 현장 정확도</span></h2>
+          <h2 id="slide-13-title" class="single-line-title"><span class="headline-line"><span class="text-blue">98.9%</span> ≠ 현장 정확도</span></h2>
           <p class="case-lead dark-lead"><span class="semantic-phrase">희귀 불량에서는 작은 <span class="term-unit">false positive tail</span>도</span> <span class="semantic-phrase">수많은 오검으로 바뀝니다.</span></p>
         </div>
         <div class="metric-contrast">
@@ -470,11 +398,11 @@
       <aside class="speaker-notes">AUROC는 threshold-free 순위 지표라 불량 픽셀 비율이 극단적으로 낮을 때 실제 precision을 가릴 수 있습니다. 3D-ADAM 사례에서 95% TPR의 pixel FPR은 4.6%였습니다.</aside>
     </section>
 
-    <section class="slide theme-white" data-title="AI 품질 게이트" aria-labelledby="slide-16-title">
+    <section class="slide theme-white" data-title="AI 품질 게이트" aria-labelledby="slide-14-title">
       <div class="slide-inner quality-gates-layout">
         <div class="gates-heading">
           <p class="eyebrow dark">FROM MODEL SCORE TO PRODUCT QUALITY</p>
-          <h2 id="slide-16-title"><span class="headline-line">그래서 품질 엔지니어의 역할이</span> <span class="headline-line text-blue">더 커집니다.</span></h2>
+          <h2 id="slide-14-title"><span class="headline-line">그래서 품질 엔지니어의 역할이</span> <span class="headline-line text-blue">더 커집니다.</span></h2>
           <p class="case-lead dark-lead">모델을 만드는 것과, 모델을 <span class="term-unit">믿어도 되는 조건</span>을 만드는 것은 다른 일입니다.</p>
         </div>
         <div class="gates-flow" aria-label="AI 품질을 위한 다섯 단계 게이트">
@@ -490,11 +418,11 @@
       <aside class="speaker-notes">품질팀이 맡을 수 있는 구체적 영역을 제시합니다. 특히 평균 성능 승인보다 slice별 stress test, 비용 기반 threshold, 사람 이관 기준, drift monitoring을 강조합니다.</aside>
     </section>
 
-    <section class="slide slide-closing theme-black" data-title="SOTA는 출발점" aria-labelledby="slide-17-title">
+    <section class="slide slide-closing theme-black" data-title="SOTA는 출발점" aria-labelledby="slide-15-title">
       <div class="ambient closing-glow" aria-hidden="true"></div>
       <div class="slide-inner closing-layout">
         <p class="eyebrow">TAKEAWAY</p>
-        <h2 id="slide-17-title"><span class="headline-line">SOTA는 출발점이지,</span> <span class="headline-line text-blue title-unit">Sign-off가 아닙니다.</span></h2>
+        <h2 id="slide-15-title"><span class="headline-line">SOTA는 출발점이지,</span> <span class="headline-line text-blue title-unit">Sign-off가 아닙니다.</span></h2>
         <p class="closing-subtitle"><span class="copy-line">좋은 AI는 모든 답을 내는 모델이 아닙니다.</span><span class="copy-line">언제 사람에게 넘길지 아는 시스템입니다.</span></p>
         <div class="closing-questions"><article><span>01</span><strong>무엇을<br>못 봤나?</strong></article><article><span>02</span><strong>언제<br>거부하나?</strong></article><article><span>03</span><strong>틀리면<br>비용은?</strong></article></div>
         <div class="closing-footer"><span>ICML 2026 · AI × Quality</span><button id="sources-button" type="button">Sources & controls <span>↗</span></button></div>
@@ -505,7 +433,7 @@
 
   <nav class="slide-controls" aria-label="슬라이드 이동">
     <button id="prev-button" type="button" aria-label="이전 슬라이드"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
-    <span id="slide-counter" aria-live="polite">01 / 26</span>
+    <span id="slide-counter" aria-live="polite">01 / 22</span>
     <button id="next-button" type="button" aria-label="다음 슬라이드"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
   </nav>
   <div class="progress-track" aria-hidden="true"><div id="progress-bar"></div></div>
@@ -526,8 +454,6 @@
       <a href="https://arxiv.org/abs/2604.24972" target="_blank" rel="noopener noreferrer"><span>Medical</span>Dynamic Decision Learning</a>
       <a href="https://arxiv.org/abs/2605.30794" target="_blank" rel="noopener noreferrer"><span>Drawing</span>MechVQA</a>
       <a href="https://icml.cc/virtual/2026/poster/65113" target="_blank" rel="noopener noreferrer"><span>IC geometry</span>LMM4-IC4K</a>
-      <a href="https://arxiv.org/abs/2602.16953" target="_blank" rel="noopener noreferrer"><span>Verification</span>LLM4Cov</a>
-      <a href="https://arxiv.org/abs/2605.20287" target="_blank" rel="noopener noreferrer"><span>EDA</span>FusionCell</a>
       <a href="https://arxiv.org/abs/2604.10718" target="_blank" rel="noopener noreferrer"><span>Calibration</span>SciPredict</a>
       <a href="https://icml.cc/virtual/2026/poster/65518" target="_blank" rel="noopener noreferrer"><span>Evaluation</span>Visual anomaly metrics</a>
     </div>
