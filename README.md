@@ -1,12 +1,12 @@
 # ICML 2026 — AI의 최고점과 현실의 품질
 
-삼성전자 TSP 품질 엔지니어 청중을 가정한 22장짜리 웹 슬라이드입니다. ICML 2026의 친숙한 응용 연구를 소개하되, benchmark의 높은 점수가 지저분하고 변화하는 현실 데이터에서 그대로 재현되지는 않는다는 관점을 발표 전체에 연결했습니다.
+삼성전자 TSP 품질 엔지니어 청중을 가정한 23장짜리 웹 슬라이드입니다. ICML 2026 전체 논문의 분야별 분포와 친숙한 응용 연구를 소개하되, benchmark의 높은 점수가 지저분하고 변화하는 현실 데이터에서 그대로 재현되지는 않는다는 관점을 발표 전체에 연결했습니다.
 
 라이브 슬라이드: <https://wseokyang.github.io/icml-2026-ai-quality-slides/>
 
-기본 발표 모드에서는 활성 슬라이드 한 장만 화면에 표시됩니다. 전체 22장을 한 페이지에서 보고 싶을 때만 `O` 키로 overview를 엽니다. 7개 논문 사례는 각각 `핵심 아이디어 → 논문 상세` 2장 세트로 구성되어 있습니다.
+기본 발표 모드에서는 활성 슬라이드 한 장만 화면에 표시됩니다. 전체 23장을 한 페이지에서 보고 싶을 때만 `O` 키로 overview를 엽니다. 7개 논문 사례는 각각 `핵심 아이디어 → 논문 상세` 2장 세트로 구성되어 있습니다.
 
-발표 연습용 전체 대본은 [PRESENTER_SCRIPT.md](PRESENTER_SCRIPT.md)에 있습니다. 본문 기준 약 22분, 화면 전환과 짧은 호흡을 포함하면 약 23~25분 분량입니다.
+발표 연습용 전체 대본은 [PRESENTER_SCRIPT.md](PRESENTER_SCRIPT.md)에 있습니다. 본문 기준 약 23분, 화면 전환과 짧은 호흡을 포함하면 약 24~26분 분량입니다.
 
 ## 실행
 
@@ -31,7 +31,7 @@ python3 -m http.server 4173
 - `Esc`: 열린 패널 또는 전체 보기 닫기
 - 모바일: 좌우 스와이프, 내용이 긴 장은 해당 장 안에서만 세로 스크롤
 
-각 슬라이드는 URL hash를 가집니다. 예를 들어 `http://localhost:4173/#10`은 “오염된 정상 데이터” 슬라이드로 바로 이동합니다.
+각 슬라이드는 URL hash를 가집니다. 예를 들어 `http://localhost:4173/#11`은 “오염된 정상 데이터” 슬라이드로 바로 이동합니다.
 
 ## PDF로 저장
 
@@ -46,8 +46,8 @@ python3 -m http.server 4173
 
 ## 파일
 
-- `index.html`: 22장 콘텐츠, 발표자 노트, 출처 링크
-- `PRESENTER_SCRIPT.md`: 22장 전체 발표 대본, 전환 문장, 발표자 주의사항, 예상 질문
+- `index.html`: 23장 콘텐츠, 발표자 노트, 출처 링크
+- `PRESENTER_SCRIPT.md`: 23장 전체 발표 대본, 전환 문장, 발표자 주의사항, 예상 질문
 - `styles.css`: Apple-inspired 시각 시스템, 반응형·인쇄 스타일
 - `slides.js`: 키보드·터치 이동, 전체 보기, 노트, 전체 화면
 - `assets/PretendardVariable.woff2`: 발표 PC와 무관하게 한글을 표시하는 로컬 웹폰트
@@ -55,6 +55,7 @@ python3 -m http.server 4173
 
 ## 내용 해석 시 주의
 
+- ICML 2026 분야별 논문 수는 [공식 프로그램 JSON](https://icml.cc/static/virtual/data/icml-2026-orals-posters.json)의 main-track Poster 6,341편을 저자 선택 `topic`의 최상위 분야로 집계했습니다. Position·journal track과 중복 oral event는 제외했고, topic 미입력 542편은 별도 표시했습니다.
 - SOTA는 동일 benchmark와 평가 규칙 안에서의 최고 성능이며 human-level 또는 deployment-ready와 같은 뜻이 아닙니다.
 - MeDS의 40% contamination은 실제 fab 데이터가 아니라 통제된 오염 실험입니다.
 - DDL의 `+105%`는 상대 향상이며 절대 mAP@75는 `0.036 → 0.075`입니다.
